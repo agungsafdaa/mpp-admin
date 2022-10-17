@@ -6,10 +6,43 @@
 
 body {
   font-family: "Work Sans", sans-serif !important;
-  background: #F6F6F6;
+  background: #F6F6F6 !important;
   margin: 0;
   padding: 0 !important;
   overflow-y: scroll !important; }
+
+a:hover {
+  cursor: pointer; }
+
+.button-mpp {
+  background: #145D9C !important;
+  color: #fff;
+  text-transform: capitalize; }
+
+.card-mpp {
+  background: #FFFFFF;
+  border-radius: 4px;
+  box-shadow: none !important; }
+  .card-mpp .heading {
+    margin: 0 0 30px 0; }
+    .card-mpp .heading .action {
+      margin: 10px 0;
+      display: flex;
+      justify-content: space-between; }
+      .card-mpp .heading .action .button-mpp {
+        width: 140px; }
+
+.form-mpp {
+  border: 1px solid #E8E8E8; }
+
+.table-mpp {
+  border: 1px solid #E8E8E8;
+  border-radius: 8px 8px 0px 0px; }
+  .table-mpp .action {
+    display: flex;
+    gap: 10px; }
+    .table-mpp .action svg {
+      color: #8A92A6; }
 
 .shadow-none {
   box-shadow: none !important; }

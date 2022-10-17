@@ -5,14 +5,59 @@
 }
 
 body {
-    font-family: $primary-font  !important;
-    background: #F6F6F6;
+    font-family: $primary-font !important;
+    background: #F6F6F6!important;
     margin: 0;
     padding: 0 !important;
 
     overflow-y: scroll !important;
 }
 
-.shadow-none{
-    box-shadow: none!important;
+a{
+    &:hover{
+        cursor:pointer;
+    }
+}
+
+.button-mpp{
+    background:$primary-color!important;
+    color:#fff;
+    text-transform: capitalize;
+}
+
+.card-mpp {
+    background: #FFFFFF;
+    border-radius: 4px;
+    box-shadow: none !important;
+    .heading{
+        margin:0 0 30px 0;
+        .action{
+            margin:10px 0;
+            display:flex;
+            justify-content: space-between;
+            .button-mpp{
+                width:140px;
+            }
+        }
+    }
+}
+
+.form-mpp{
+    border: 1px solid #E8E8E8;
+}
+
+.table-mpp{
+    border: 1px solid #E8E8E8;
+    border-radius: 8px 8px 0px 0px;
+    .action{
+        display:flex;
+        gap:10px;
+        svg{
+            color:#8A92A6;
+        }
+    }
+}
+
+.shadow-none {
+    box-shadow: none !important;
 }
