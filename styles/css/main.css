@@ -6,20 +6,30 @@
 
 body {
   font-family: "Work Sans", sans-serif !important;
-  background: #FFFFFF;
+  background: #F6F6F6;
   margin: 0;
   padding: 0 !important;
   overflow-y: scroll !important; }
 
+.shadow-none {
+  box-shadow: none !important; }
+
 .sidebar-mpp .heading {
   display: flex;
-  padding: 17px 0;
+  padding: 18px 0;
   align-items: center;
   justify-content: center; }
+.sidebar-mpp .menu-mpp:hover {
+  background: #145D9C;
+  color: #fff; }
+  .sidebar-mpp .menu-mpp:hover svg {
+    color: #fff; }
 
 .navbar-mpp {
   display: flex;
-  justify-content: space-between; }
+  justify-content: space-between;
+  background: #fff !important;
+  color: #000; }
   .navbar-mpp .info-login {
     display: flex;
     gap: 20px;

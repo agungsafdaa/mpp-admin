@@ -1,16 +1,28 @@
 .sidebar-mpp {
     .heading {
         display: flex;
-        padding: 17px 0;
+        padding: 18px 0;
         align-items: center;
         justify-content: center;
+    }
+
+    .menu-mpp{
+        &:hover{
+            background: #145D9C;
+            color:#fff;
+            svg{
+                color:#fff;
+            }
+        }
     }
 }
 
 .navbar-mpp{
     display: flex;
     justify-content: space-between;
-   
+    background:#fff!important;
+    color:#000;
+    
     .info-login{
         display: flex;
         gap: 20px;

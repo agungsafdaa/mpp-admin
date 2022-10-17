@@ -19,14 +19,21 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Link from 'next/link';
-import Container from '@mui/material/Container';
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import Breadcrumbs from '@mui/material/Breadcrumbs';
+import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import Tooltip from '@mui/material/Tooltip';
 import Menu from '@mui/material/Menu';
+import BreadcrumbsComponents from '../Breadcrumbs';
+import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
+import CircleIcon from '@mui/icons-material/Circle';
 const drawerWidth = 240;
 
 function ResponsiveDrawer(props) {
-  const { window } = props;
+ 
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [dropdownShow, setDropdownShow] = useState(false);
   const [anchorElUser, setAnchorElUser] = useState(null);
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -34,6 +41,10 @@ function ResponsiveDrawer(props) {
 
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
+  };
+
+  const ShowDropdown = (event) => {
+    setDropdownShow(!dropdownShow)
   };
 
   const handleCloseUserMenu = () => {
@@ -45,56 +56,75 @@ function ResponsiveDrawer(props) {
         <h3>DPMPTSP.PALEMBANG</h3>
       </div>
       <Divider />
-      <Link href="/master-dinas">
-        a
-      </Link>
-      <br />
+
+
       <Link href="/">
-        index
+        <List className="menu-mpp">
+          <ListItem disablePadding>
+            <ListItemButton>
+              <ListItemIcon>
+                <DashboardIcon />
+              </ListItemIcon>
+              <ListItemText primary={'Dashboard'} />
+            </ListItemButton>
+          </ListItem>
+        </List>
       </Link>
-      <List>
-        {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
+
+      <List onClick={ShowDropdown} className="menu-mpp">
+        <ListItem disablePadding>
+          <ListItemButton>
+            <ListItemIcon>
+              <FormatListBulletedIcon />
+            </ListItemIcon>
+            <ListItemText primary={'Referensi'} /> <KeyboardArrowDownIcon />
+
+          </ListItemButton>
+        </ListItem>
       </List>
-      <Divider />
-      <List>
-        {['All mail', 'Trash', 'Spam'].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
+
+      {dropdownShow === false ?
+        '' :
+        <>
+          <Link href="/master-dinas" >
+            <List  className="menu-mpp">
+              <ListItem disablePadding>
+                <ListItemButton>
+                  <ListItemIcon>
+                    <CircleIcon style={{ fontSize: 11 }} />
+                  </ListItemIcon>
+                  <ListItemText primary={'Kategori Dinas'} />
+
+                </ListItemButton>
+              </ListItem>
+            </List>
+          </Link>
+
+        </>
+      }
+
+
+
+
+
     </div>
   );
 
-  const container = window !== undefined ? () => window().document.body : undefined;
+ 
 
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
       <AppBar
-     
+        className="shadow-none"
         position="fixed"
         sx={{
           width: { sm: `calc(100% - ${drawerWidth}px)` },
           ml: { sm: `${drawerWidth}px` },
         }}
-     
+
       >
-        <Toolbar    className="navbar-mpp">
+        <Toolbar className="navbar-mpp">
           <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -104,44 +134,42 @@ function ResponsiveDrawer(props) {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap component="div">
-            Responsive drawer
-          </Typography>
+          <BreadcrumbsComponents />
           <Box sx={{ flexGrow: 0 }}>
-          <Tooltip title="Open settings">
-            <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-              <div className="info-login">
-              <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-              <h6>Superadmin</h6>
-              </div>
-           
-            </IconButton>
-          </Tooltip>
-          <Menu
-            sx={{ mt: '45px' }}
-            id="menu-appbar"
-            anchorEl={anchorElUser}
-            anchorOrigin={{
-              vertical: 'top',
-              horizontal: 'right',
-            }}
-            keepMounted
-            transformOrigin={{
-              vertical: 'top',
-              horizontal: 'right',
-            }}
-            open={Boolean(anchorElUser)}
-            onClose={handleCloseUserMenu}
-          >
+            <Tooltip title="Open settings">
+              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                <div className="info-login">
+                  <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                  <h6>Superadmin</h6>
+                </div>
 
-            <MenuItem onClick={handleCloseUserMenu}>
-              <Typography textAlign="center">Logout</Typography>
-            </MenuItem>
+              </IconButton>
+            </Tooltip>
+            <Menu
+              sx={{ mt: '45px' }}
+              id="menu-appbar"
+              anchorEl={anchorElUser}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              open={Boolean(anchorElUser)}
+              onClose={handleCloseUserMenu}
+            >
 
-          </Menu>
-        </Box>
+              <MenuItem onClick={handleCloseUserMenu}>
+                <Typography textAlign="center">Logout</Typography>
+              </MenuItem>
+
+            </Menu>
+          </Box>
         </Toolbar>
-      
+
       </AppBar>
       <Box
         component="nav"
@@ -150,7 +178,7 @@ function ResponsiveDrawer(props) {
       >
         {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
         <Drawer
-          container={container}
+       
           variant="temporary"
           open={mobileOpen}
           onClose={handleDrawerToggle}
@@ -186,12 +214,5 @@ function ResponsiveDrawer(props) {
   );
 }
 
-ResponsiveDrawer.propTypes = {
-  /**
-   * Injected by the documentation to work in an iframe.
-   * You won't need it on your project.
-   */
-  window: PropTypes.func,
-};
 
 export default ResponsiveDrawer;

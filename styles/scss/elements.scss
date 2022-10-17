@@ -6,9 +6,13 @@
 
 body {
     font-family: $primary-font  !important;
-    background: #FFFFFF;
+    background: #F6F6F6;
     margin: 0;
     padding: 0 !important;
 
     overflow-y: scroll !important;
+}
+
+.shadow-none{
+    box-shadow: none!important;
 }
