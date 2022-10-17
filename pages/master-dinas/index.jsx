@@ -30,7 +30,7 @@ const rows = [
   createData('40.01', 'Dinas Perdagangan Kota Palembang', 'Disdag'),
   createData('50.01', 'Dinas Perhubungan Kota Palembang', 'Dishub'),
 ];
-function index() {
+export default function ListDinas({ name }) {
   const [page, setPage] = useState(1);
   let  nomor  = 1;
   const handleChange = (event, value) => {
@@ -110,4 +110,3 @@ function index() {
   )
 }
 
-export default index
