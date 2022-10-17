@@ -1,0 +1,19 @@
+.sidebar-mpp {
+    .heading {
+        display: flex;
+        padding: 17px 0;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+.navbar-mpp{
+    display: flex;
+    justify-content: space-between;
+   
+    .info-login{
+        display: flex;
+        gap: 20px;
+        align-items: center;
+    }
+}
