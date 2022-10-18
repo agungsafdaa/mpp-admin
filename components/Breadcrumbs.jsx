@@ -12,6 +12,7 @@ export default function BreadcrumbsComponents() {
         <Breadcrumbs
             separator={<NavigateNextIcon fontSize="small" />}
             aria-label="breadcrumb"
+            className="breadcrumb-navbar"
         >
             <Link underline="hover" key="1" color="inherit" href="/">
                 Beranda

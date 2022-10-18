@@ -18,6 +18,35 @@ a:hover {
   background: #145D9C !important;
   color: #fff;
   text-transform: capitalize; }
+  .button-mpp a {
+    color: #fff;
+    text-decoration: none; }
+
+.form-input {
+  display: flex;
+  gap: 130px;
+  align-items: center; }
+  .form-input .MuiFormControl-root {
+    width: 700px; }
+  .form-input .required {
+    color: #145D9C; }
+  @media screen and (max-width: 959px) {
+    .form-input {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 30px; }
+      .form-input .MuiFormControl-root {
+        width: 100%; } }
+
+@media screen and (max-width: 599px) {
+  .breadcrumb-navbar {
+    display: none; } }
+
+.breadcrumb-mobile {
+  display: none; }
+  @media screen and (max-width: 959px) {
+    .breadcrumb-mobile {
+      display: block; } }
 
 .card-mpp {
   background: #FFFFFF;

@@ -18,7 +18,7 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Link from 'next/link';
 import DashboardIcon from '@mui/icons-material/Dashboard';
-
+import BreadcrumbsMobile from './BreadcrumbsMobile';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import Tooltip from '@mui/material/Tooltip';
 import Menu from '@mui/material/Menu';
@@ -206,6 +206,7 @@ const Layout = ({ children }) => {
           sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}
         >
           <Toolbar />
+          <BreadcrumbsMobile />
           {children}
         </Box>
       </Box>

@@ -24,7 +24,7 @@ function createData(name, calories, fat, carbs, protein) {
 }
 
 const rows = [
-  createData('10.01','Dinas Kesehatan Kota Palembang', 'Dinkes'),
+  createData('10.01', 'Dinas Kesehatan Kota Palembang', 'Dinkes'),
   createData('20.01', 'Dinas Lingkungan Hidup dan Kebersihan Kota Palembang', 'DLHK'),
   createData('30.01', 'Dinas Pendidikan Kota Palembang', 'Diknas'),
   createData('40.01', 'Dinas Perdagangan Kota Palembang', 'Disdag'),
@@ -32,7 +32,7 @@ const rows = [
 ];
 export default function ListDinas({ name }) {
   const [page, setPage] = useState(1);
-  let  nomor  = 1;
+  let nomor = 1;
   const handleChange = (event, value) => {
     setPage(value);
   };
@@ -43,7 +43,9 @@ export default function ListDinas({ name }) {
           <div className="heading">
             <h3>Kategori Dinas</h3>
             <div className="action">
-              <Button className="button-mpp" variant="contained">Tambah</Button>
+              <Button className="button-mpp" variant="contained">
+                <Link href="/master-dinas/tambah-dinas">Tambah</Link>
+              </Button>
               <Paper
                 component="form"
                 className="shadow-none form-mpp"
@@ -78,20 +80,28 @@ export default function ListDinas({ name }) {
                     key={row.name}
                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                   >
-                    
+
                     <TableCell component="th" scope="row">
                       {nomor++}
                     </TableCell>
                     <TableCell >{row.name}</TableCell>
                     <TableCell >{row.calories}</TableCell>
                     <TableCell >{row.fat}</TableCell>
-                   
-                   
+
+
                     <TableCell>
                       <div className="action">
-                        <h3><Link href="/"><LoginIcon/></Link></h3>
-                        <Link href="/"><EditIcon/></Link>
-                        <Link href="/"><DeleteIcon/></Link>
+                        <Link underline="hover"
+
+                          color="inherit"
+                          href="/material-ui/getting-started/installation/" >
+                          <a>
+
+                            <h3><LoginIcon /></h3>
+                          </a>
+                        </Link>
+                        <Link href="/"><EditIcon /></Link>
+                        <Link href="/"><DeleteIcon /></Link>
                       </div>
                     </TableCell>
                   </TableRow>
