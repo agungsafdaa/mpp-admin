@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import Card from '@mui/material/Card';
 import Head from 'next/head';
+import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
@@ -25,13 +25,11 @@ function createData(name, calories, fat, carbs, protein) {
 }
 
 const rows = [
-  createData('10.01', 'Dinas Kesehatan Kota Palembang', 'Dinkes'),
-  createData('20.01', 'Dinas Lingkungan Hidup dan Kebersihan Kota Palembang', 'DLHK'),
-  createData('30.01', 'Dinas Pendidikan Kota Palembang', 'Diknas'),
-  createData('40.01', 'Dinas Perdagangan Kota Palembang', 'Disdag'),
-  createData('50.01', 'Dinas Perhubungan Kota Palembang', 'Dishub'),
+  createData('Bidang Lingkungan Dinas Kesehatan', '1'),
+  createData('Bidang Sarana Dinas Kesehatan', '2'),
+  createData('Bidang SDM Dinas Kesehatan', '4'),
 ];
-export default function ListDinas({ name }) {
+export default function KategoriBidang() {
   const [page, setPage] = useState(1);
   let nomor = 1;
   const handleChange = (event, value) => {
@@ -48,10 +46,10 @@ export default function ListDinas({ name }) {
         <Card className="card-mpp kategori-dinas">
           <CardContent>
             <div className="heading">
-              <h3>Kategori Dinas</h3>
+              <h3>Kategori Bidang Dinas Kesehatan</h3>
               <div className="action">
                 <Button className="button-mpp" variant="contained">
-                  <Link href="/master-dinas/tambah-dinas">Tambah</Link>
+                  <Link href="/master-dinas/tambah-bidang">Tambah</Link>
                 </Button>
                 <Paper
                   component="form"
@@ -75,9 +73,8 @@ export default function ListDinas({ name }) {
                 <TableHead>
                   <TableRow>
                     <TableCell>No</TableCell>
-                    <TableCell >Kode Dinas</TableCell>
-                    <TableCell >Nama Dinas</TableCell>
-                    <TableCell >Singkatan Dinas</TableCell>
+                    <TableCell >Kategori Bidang Dinas</TableCell>
+                    <TableCell >Jumlah Seksi</TableCell>
                     <TableCell >Aksi</TableCell>
                   </TableRow>
                 </TableHead>
@@ -93,15 +90,13 @@ export default function ListDinas({ name }) {
                       </TableCell>
                       <TableCell >{row.name}</TableCell>
                       <TableCell >{row.calories}</TableCell>
-                      <TableCell >{row.fat}</TableCell>
-
 
                       <TableCell>
                         <div className="action">
                           <Link underline="hover"
 
                             color="inherit"
-                            href="/master-dinas/kategori-bidang/" >
+                            href="/material-ui/getting-started/installation/" >
                             <a>
 
                               <h3><LoginIcon /></h3>
@@ -125,7 +120,6 @@ export default function ListDinas({ name }) {
 
       </div>
     </>
-
   )
 }
 

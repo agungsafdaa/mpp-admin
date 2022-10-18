@@ -6,61 +6,118 @@
 
 body {
     font-family: $primary-font !important;
-    background: #F6F6F6!important;
+    background: #F6F6F6 !important;
     margin: 0;
     padding: 0 !important;
 
     overflow-y: scroll !important;
 }
 
-a{
-    &:hover{
-        cursor:pointer;
+a {
+    &:hover {
+        cursor: pointer;
     }
 }
 
-.button-mpp{
-    background:$primary-color!important;
-    color:#fff;
+.container-mpp {
+    padding: 24px !important;
+}
+
+.button-mpp {
+    background: $primary-color !important;
+    color: #fff;
     text-transform: capitalize;
-    a{
-        color:#fff;
+
+    a {
+        color: #fff;
         text-decoration: none;
     }
 }
 
-.form-input{
-    display: flex;
-    gap:130px;
-    align-items: center;
-    .MuiFormControl-root{
-        width: 700px;
+.button-outline-dashed{
+    border: 1px dashed #145D9C!important;
+    background:none;
+    color:#145D9C;
+    text-transform: capitalize;
+    &:hover{
+        color:#fff;
     }
+}
 
-    .required{
-        color: #145D9C;
-    }
+.button-outline-mpp {
+    border: 1px solid $primary-color !important;
+    color: $primary-color;
+    text-transform: capitalize;
+    background: none !important;
 
-    @include lt-md{
-        flex-direction: column;
-        align-items: flex-start;
-        gap:30px;
-        .MuiFormControl-root{
-            width: 100%;
-        }
+    a {
+        color: #fff;
+        text-decoration: none;
     }
 }
 
 
-.breadcrumb-navbar{
-    @include lt-sm{
+.MuiBox-root {
+    padding: 0;
+
+    .card-action {
+        padding: 0;
+    }
+}
+
+.form-input {
+    display: grid;
+    grid-template-columns: 15% 75%;
+    gap: 220px;
+    align-items: center;
+    color: #52575C;
+
+    margin: 20px 0;
+
+    .MuiFormControl-root {
+        width: 700px;
+        .Mui-disabled {
+            background: #d7d7d7;
+        }
+    }
+
+    .required {
+        color: #145D9C;
+    }
+
+    @include lt-md {
+        grid-template-columns: 100%;
+        align-items: flex-start;
+        gap: 30px;
+
+        .MuiFormControl-root {
+            width: 100%;
+        }
+        button{
+            width: 100%;
+        }
+    }
+
+    button{
+        width: 700px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    
+    }
+}
+
+
+.breadcrumb-navbar {
+    @include lt-sm {
         display: none;
     }
 }
 
-.breadcrumb-mobile{
+.breadcrumb-mobile {
     display: none;
-    @include lt-md{
+
+    @include lt-md {
         display: block;
     }
 }
@@ -69,35 +126,62 @@ a{
     background: #FFFFFF;
     border-radius: 4px;
     box-shadow: none !important;
-    .heading{
-        margin:0 0 30px 0;
-        .action{
-            margin:10px 0;
-            display:flex;
+
+    .heading {
+        margin: 0 0 30px 0;
+
+        .action {
+            margin: 10px 0;
+            display: flex;
             justify-content: space-between;
-            .button-mpp{
-                width:140px;
+
+            .button-mpp {
+                width: 140px;
             }
         }
     }
 }
 
-.form-mpp{
+.form-mpp {
     border: 1px solid #E8E8E8;
 }
 
-.table-mpp{
+.table-mpp {
     border: 1px solid #E8E8E8;
     border-radius: 8px 8px 0px 0px;
-    .action{
-        display:flex;
-        gap:10px;
-        svg{
-            color:#8A92A6;
+
+    .action {
+        display: flex;
+        gap: 10px;
+
+        svg {
+            color: #8A92A6;
         }
     }
 }
 
 .shadow-none {
     box-shadow: none !important;
+}
+
+.card-action {
+    margin: 20px 0 0 0;
+    background: #FFFFFF;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.06), 0px 2px 6px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+   
+    margin: 20px 0 0 0;
+   
+    .action {
+        display: flex;
+        gap: 20px;
+        align-items: center;
+        justify-content: flex-end;
+        button{
+            width:100px;
+        }
+    }
 }

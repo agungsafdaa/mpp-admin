@@ -10,12 +10,12 @@ export default function BreadcrumbsMobile() {
 
     return (
 
-        <Card className="card-mpp" sx={{mb:3}}>
+        <Card className="card-mpp breadcrumb-mobile" sx={{mb:3}}>
             <CardContent>
                 <Breadcrumbs
                     separator={<NavigateNextIcon fontSize="small" />}
                     aria-label="breadcrumb"
-                    className="breadcrumb-mobile"
+                 
                 >
                     <Link underline="hover" key="1" color="inherit" href="/">
                         Beranda

@@ -25,7 +25,7 @@ import Menu from '@mui/material/Menu';
 import BreadcrumbsComponents from './Breadcrumbs';
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import CircleIcon from '@mui/icons-material/Circle';
-const drawerWidth = 240;
+const drawerWidth = 300;
 
 const Layout = ({ children }) => {
 
@@ -96,7 +96,19 @@ const Layout = ({ children }) => {
               </ListItem>
             </List>
           </Link>
+          <Link href="/master-dinas" >
+            <List className="menu-mpp">
+              <ListItem disablePadding>
+                <ListItemButton>
+                  <ListItemIcon>
+                    <CircleIcon style={{ fontSize: 11 }} />
+                  </ListItemIcon>
+                  <ListItemText primary={'Master Bidang/Seksi PTSP'} />
 
+                </ListItemButton>
+              </ListItem>
+            </List>
+          </Link>
         </>
       }
 
@@ -209,6 +221,7 @@ const Layout = ({ children }) => {
           <BreadcrumbsMobile />
           {children}
         </Box>
+         
       </Box>
     </>
 

@@ -1,11 +1,11 @@
-@import url("https://fonts.googleapis.com/css2?family=Work+Sans&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter&display=swap");
 * {
   margin: 0;
   padding: 0;
   border: 0; }
 
 body {
-  font-family: "Work Sans", sans-serif !important;
+  font-family: "Inter", sans-serif !important;
   background: #F6F6F6 !important;
   margin: 0;
   padding: 0 !important;
@@ -13,6 +13,9 @@ body {
 
 a:hover {
   cursor: pointer; }
+
+.container-mpp {
+  padding: 24px !important; }
 
 .button-mpp {
   background: #145D9C !important;
@@ -22,21 +25,55 @@ a:hover {
     color: #fff;
     text-decoration: none; }
 
+.button-outline-dashed {
+  border: 1px dashed #145D9C !important;
+  background: none;
+  color: #145D9C;
+  text-transform: capitalize; }
+  .button-outline-dashed:hover {
+    color: #fff; }
+
+.button-outline-mpp {
+  border: 1px solid #145D9C !important;
+  color: #145D9C;
+  text-transform: capitalize;
+  background: none !important; }
+  .button-outline-mpp a {
+    color: #fff;
+    text-decoration: none; }
+
+.MuiBox-root {
+  padding: 0; }
+  .MuiBox-root .card-action {
+    padding: 0; }
+
 .form-input {
-  display: flex;
-  gap: 130px;
-  align-items: center; }
+  display: grid;
+  grid-template-columns: 15% 75%;
+  gap: 220px;
+  align-items: center;
+  color: #52575C;
+  margin: 20px 0; }
   .form-input .MuiFormControl-root {
     width: 700px; }
+    .form-input .MuiFormControl-root .Mui-disabled {
+      background: #d7d7d7; }
   .form-input .required {
     color: #145D9C; }
   @media screen and (max-width: 959px) {
     .form-input {
-      flex-direction: column;
+      grid-template-columns: 100%;
       align-items: flex-start;
       gap: 30px; }
       .form-input .MuiFormControl-root {
+        width: 100%; }
+      .form-input button {
         width: 100%; } }
+  .form-input button {
+    width: 700px;
+    display: flex;
+    align-items: center;
+    gap: 10px; }
 
 @media screen and (max-width: 599px) {
   .breadcrumb-navbar {
@@ -75,6 +112,23 @@ a:hover {
 
 .shadow-none {
   box-shadow: none !important; }
+
+.card-action {
+  margin: 20px 0 0 0;
+  background: #FFFFFF;
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.06), 0px 2px 6px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  margin: 20px 0 0 0; }
+  .card-action .action {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    justify-content: flex-end; }
+    .card-action .action button {
+      width: 100px; }
 
 .sidebar-mpp .heading {
   display: flex;
