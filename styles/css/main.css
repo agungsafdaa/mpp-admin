@@ -33,6 +33,9 @@ a:hover {
   .button-outline-dashed:hover {
     color: #fff; }
 
+button {
+  background: none; }
+
 .button-outline-mpp {
   border: 1px solid #145D9C !important;
   color: #145D9C;
@@ -135,6 +138,14 @@ a:hover {
   padding: 18px 0;
   align-items: center;
   justify-content: center; }
+.sidebar-mpp .menu-mpp .menu span {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 175%; }
+.sidebar-mpp .menu-mpp .center {
+  justify-content: center; }
 .sidebar-mpp .menu-mpp:hover {
   background: #145D9C;
   color: #fff; }
@@ -150,5 +161,45 @@ a:hover {
     display: flex;
     gap: 20px;
     align-items: center; }
+
+.login-page {
+  width: 100% !important;
+  height: 100vh;
+  display: flex;
+  align-items: center; }
+  @media screen and (max-width: 599px) {
+    .login-page {
+      height: 100vh; } }
+  .login-page .logo-area {
+    display: flex;
+    align-items: center;
+    grid-gap: 10px; }
+  .login-page .card-login {
+    padding: 17px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px; }
+    .login-page .card-login .form {
+      margin: 20px 0; }
+    .login-page .card-login .submit {
+      padding: 20px 0; }
+      .login-page .card-login .submit .button-mpp {
+        width: 100%;
+        color: #fff;
+        padding: 10px 0; }
+
+.not-found {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 20px 0; }
+  .not-found .info {
+    margin: 20px;
+    text-align: center; }
+  .not-found .img-not-found {
+    width: 50%; }
 
 /*# sourceMappingURL=main.css.map */

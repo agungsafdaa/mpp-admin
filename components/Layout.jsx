@@ -1,11 +1,13 @@
 
-import React, { useState } from 'react';
+import React, { useState, createContext, useContext, } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
 import Divider from '@mui/material/Divider';
 import Drawer from '@mui/material/Drawer';
 import IconButton from '@mui/material/IconButton';
+import { logoutUser } from "../util"
+import { isAuthenticated, unauthenticateUser } from '../auth';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
@@ -25,13 +27,27 @@ import Menu from '@mui/material/Menu';
 import BreadcrumbsComponents from './Breadcrumbs';
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import CircleIcon from '@mui/icons-material/Circle';
-const drawerWidth = 300;
-
+import Custom404 from '../pages/404';
+import { useRouter } from 'next/router'
+import Login from '../pages';
+import Router from "next/router"
+const drawerWidth = 240;
+const Context = createContext();
 const Layout = ({ children }) => {
-
+  const router = useRouter()
+  const authenticated = isAuthenticated()
+  const data_login = JSON.parse(localStorage.getItem("dataLogin"));
+  const [globalState, setGlobalState] = useState([data_login]);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [dropdownShow, setDropdownShow] = useState(false);
   const [anchorElUser, setAnchorElUser] = useState(null);
+  const MenuSidebar = [
+    { label: 'Kategori Dinas', path: '/master-dinas' },
+    { label: 'Master Bidang/Seksi PTSP', path: '/master-bidang-ptsp' },
+    { label: 'Kategori Izin', path: '/kategori-izin' },
+    { label: 'Master Persyaratan', path: '/master-persyaratan' },
+  ]
+
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
@@ -44,6 +60,12 @@ const Layout = ({ children }) => {
     setDropdownShow(!dropdownShow)
   };
 
+  const Logout = async () => {
+    logoutUser() // add this
+    localStorage.removeItem("dataLogin");
+    unauthenticateUser()
+    Router.push('/')
+  }
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
@@ -53,16 +75,14 @@ const Layout = ({ children }) => {
         <h3>DPMPTSP.PALEMBANG</h3>
       </div>
       <Divider />
-
-
       <Link href="/">
         <List className="menu-mpp">
           <ListItem disablePadding>
             <ListItemButton>
-              <ListItemIcon>
+              <ListItemIcon className="center">
                 <DashboardIcon />
               </ListItemIcon>
-              <ListItemText primary={'Dashboard'} />
+              <ListItemText className="menu" primary={'Dashboard'} />
             </ListItemButton>
           </ListItem>
         </List>
@@ -71,10 +91,10 @@ const Layout = ({ children }) => {
       <List onClick={ShowDropdown} className="menu-mpp">
         <ListItem disablePadding>
           <ListItemButton>
-            <ListItemIcon>
+            <ListItemIcon className="center">
               <FormatListBulletedIcon />
             </ListItemIcon>
-            <ListItemText primary={'Referensi'} /> <KeyboardArrowDownIcon />
+            <ListItemText className="menu" primary={'Referensi'} /> <KeyboardArrowDownIcon />
 
           </ListItemButton>
         </ListItem>
@@ -83,32 +103,22 @@ const Layout = ({ children }) => {
       {dropdownShow === false ?
         '' :
         <>
-          <Link href="/master-dinas" >
-            <List className="menu-mpp">
-              <ListItem disablePadding>
-                <ListItemButton>
-                  <ListItemIcon>
-                    <CircleIcon style={{ fontSize: 11 }} />
-                  </ListItemIcon>
-                  <ListItemText primary={'Kategori Dinas'} />
+          {MenuSidebar.map((row) => (
 
-                </ListItemButton>
-              </ListItem>
-            </List>
-          </Link>
-          <Link href="/master-dinas" >
-            <List className="menu-mpp">
-              <ListItem disablePadding>
-                <ListItemButton>
-                  <ListItemIcon>
-                    <CircleIcon style={{ fontSize: 11 }} />
-                  </ListItemIcon>
-                  <ListItemText primary={'Master Bidang/Seksi PTSP'} />
+            <Link href={row.path} key={row.label}>
+              <List className="menu-mpp">
+                <ListItem disablePadding>
+                  <ListItemButton>
+                    <ListItemIcon className="center">
+                      <CircleIcon style={{ fontSize: 11 }} />
+                    </ListItemIcon>
+                    <ListItemText className="menu" primary={row.label} style={{ fontSize: '14px!important;' }} />
 
-                </ListItemButton>
-              </ListItem>
-            </List>
-          </Link>
+                  </ListItemButton>
+                </ListItem>
+              </List>
+            </Link>
+          ))}
         </>
       }
 
@@ -121,108 +131,128 @@ const Layout = ({ children }) => {
 
   return (
     <>
-    
-      <Box sx={{ display: 'flex' }}>
-        <CssBaseline />
-        <AppBar
-          className="shadow-none"
-          position="fixed"
-          sx={{
-            width: { sm: `calc(100% - ${drawerWidth}px)` },
-            ml: { sm: `${drawerWidth}px` },
-          }}
+      {router.pathname === '/' ?
+        <>
+          <Divider />
+          <Login />
+        </>
+        :
+        <Box sx={{ display: 'flex' }}>
+          <CssBaseline />
+          <AppBar
+            className="shadow-none"
+            position="fixed"
+            sx={{
+              width: { sm: `calc(100% - ${drawerWidth}px)` },
+              ml: { sm: `${drawerWidth}px` },
+            }}
 
-        >
-          <Toolbar className="navbar-mpp">
-        
-            <IconButton
-              color="inherit"
-              aria-label="open drawer"
-              edge="start"
-              onClick={handleDrawerToggle}
-              sx={{ mr: 2, display: { sm: 'none' } }}
-            >
-              <MenuIcon />
-            </IconButton>
-            <BreadcrumbsComponents />
-            <Box sx={{ flexGrow: 0 }}>
-              <Tooltip title="Open settings">
-                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <div className="info-login">
-                    <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-                    <h6>Superadmin</h6>
-                  </div>
+          >
+            <Toolbar className="navbar-mpp">
 
-                </IconButton>
-              </Tooltip>
-              <Menu
-                sx={{ mt: '45px' }}
-                id="menu-appbar"
-                anchorEl={anchorElUser}
-                anchorOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                open={Boolean(anchorElUser)}
-                onClose={handleCloseUserMenu}
+              <IconButton
+                color="inherit"
+                aria-label="open drawer"
+                edge="start"
+                onClick={handleDrawerToggle}
+                sx={{ mr: 2, display: { sm: 'none' } }}
               >
+                <MenuIcon />
+              </IconButton>
+              <BreadcrumbsComponents />
+              <Box sx={{ flexGrow: 0 }}>
+                <Tooltip title="Open settings">
+                  <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                    <div className="info-login">
+                      <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                      <h6>{authenticated === true ? data_login.user.user.email : ""}</h6>
+                    </div>
 
-                <MenuItem onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">Logout</Typography>
-                </MenuItem>
+                  </IconButton>
+                </Tooltip>
+                <Menu
+                  sx={{ mt: '45px' }}
+                  id="menu-appbar"
+                  anchorEl={anchorElUser}
+                  anchorOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                  }}
+                  keepMounted
+                  transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                  }}
+                  open={Boolean(anchorElUser)}
+                  onClose={handleCloseUserMenu}
+                >
 
-              </Menu>
-            </Box>
-          </Toolbar>
+                  <MenuItem>
+                    <Typography textAlign="center">
+                      <Link href="ganti-password">
+                        Ganti Password
+                      </Link>
+                    </Typography>
+                  </MenuItem>
+                  <MenuItem onClick={Logout}>
+                    <Typography textAlign="center">Logout</Typography>
+                  </MenuItem>
+                </Menu>
+              </Box>
+            </Toolbar>
 
-        </AppBar>
-        <Box
-          component="nav"
-          sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
-          aria-label="mailbox folders"
-        >
-          {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
-          <Drawer
-
-            variant="temporary"
-            open={mobileOpen}
-            onClose={handleDrawerToggle}
-            ModalProps={{
-              keepMounted: true, // Better open performance on mobile.
-            }}
-            sx={{
-              display: { xs: 'block', sm: 'none' },
-              '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
-            }}
+          </AppBar>
+          <Box
+            component="nav"
+            sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
+            aria-label="mailbox folders"
           >
-            {drawer}
-          </Drawer>
-          <Drawer
-            variant="permanent"
-            sx={{
-              display: { xs: 'none', sm: 'block' },
-              '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
-            }}
-            open
+            {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
+            <Drawer
+
+              variant="temporary"
+              open={mobileOpen}
+              onClose={handleDrawerToggle}
+              ModalProps={{
+                keepMounted: true, // Better open performance on mobile.
+              }}
+              sx={{
+                display: { xs: 'block', sm: 'none' },
+                '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+              }}
+            >
+              {drawer}
+            </Drawer>
+            <Drawer
+              variant="permanent"
+              sx={{
+                display: { xs: 'none', sm: 'block' },
+                '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+              }}
+              open
+            >
+              {drawer}
+            </Drawer>
+          </Box>
+          <Box
+            component="main"
+            sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}
           >
-            {drawer}
-          </Drawer>
+            <Toolbar />
+            <BreadcrumbsMobile />
+
+            {children.props.statusCode === undefined ?
+              <Context.Provider value={[globalState, setGlobalState]}>
+                {children}
+              </Context.Provider>
+
+              : <Custom404 />}
+
+          </Box>
+
         </Box>
-        <Box
-          component="main"
-          sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}
-        >
-          <Toolbar />
-          <BreadcrumbsMobile />
-          {children}
-        </Box>
-         
-      </Box>
+      }
+
     </>
 
 

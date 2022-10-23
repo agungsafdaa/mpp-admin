@@ -44,6 +44,10 @@ a {
     }
 }
 
+button{
+    background:none;
+}
+
 .button-outline-mpp {
     border: 1px solid $primary-color !important;
     color: $primary-color;
@@ -185,3 +189,4 @@ a {
         }
     }
 }
+

@@ -1,11 +1,12 @@
-import React, { useState } from 'react'
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useState, useEffect } from 'react'
 import Card from '@mui/material/Card';
 import Head from 'next/head';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Link from 'next/link';
-import Typography from '@mui/material/Typography'
+import { isAuthenticated } from '../../auth';
 import InputBase from '@mui/material/InputBase';
 import IconButton from '@mui/material/IconButton'
 import Paper from '@mui/material/Paper';
@@ -20,23 +21,89 @@ import Pagination from '@mui/material/Pagination';
 import LoginIcon from '@mui/icons-material/Login';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
+import Dialog from '@mui/material/Dialog';
+import DialogTitle from '@mui/material/DialogTitle';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogActions from '@mui/material/DialogActions';
+import Router from "next/router"
+import Cookies from 'js-cookie'
+import Skeleton from '@mui/material/Skeleton';
+import axios from 'axios';
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
+import { useRouter } from 'next/router'
 
-const rows = [
-  createData('10.01', 'Dinas Kesehatan Kota Palembang', 'Dinkes'),
-  createData('20.01', 'Dinas Lingkungan Hidup dan Kebersihan Kota Palembang', 'DLHK'),
-  createData('30.01', 'Dinas Pendidikan Kota Palembang', 'Diknas'),
-  createData('40.01', 'Dinas Perdagangan Kota Palembang', 'Disdag'),
-  createData('50.01', 'Dinas Perhubungan Kota Palembang', 'Dishub'),
-];
-export default function ListDinas({ name }) {
+export default function ListDinas() {
+  const authenticated = isAuthenticated()
+  const MySwal = withReactContent(Swal)
+  const router = useRouter()
   const [page, setPage] = useState(1);
+  const [open, setOpen] = useState(false);
+  const [progress, setProgress] = useState(false);
+  const [loading, setLoading] = useState(true)
+  const [dinas, setDinas] = useState([])
+
   let nomor = 1;
   const handleChange = (event, value) => {
     setPage(value);
   };
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const listDinas = async () => {
+    setProgress(true)
+
+    try {
+      let url = `${process.env.DB_API}dinas/list-dinas`
+      const response = await axios.get(url, {
+        headers: {
+          Authorization: Cookies.get('token')
+        }
+      });
+
+      if (response.status === 200) {
+        setProgress(false)
+        setDinas(response.data)
+
+      }
+
+    } catch (error) {
+
+      MySwal.fire({
+        title: "Error!",
+        text: error.response.data.message,
+        icon: "error",
+        button: "batal",
+      });
+      setProgress(true)
+    }
+  }
+
+
+
+  useEffect(() => {
+    listDinas()
+  }, [])
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
+
+  useEffect(() => {
+    // if user is not authenticated, redirect to login page
+    if (!authenticated) Router.push('/')
+    setLoading(false)
+  })
+  if (loading) return <p>Loading...</p>
+
   return (
     <>
       <Head>
@@ -70,6 +137,19 @@ export default function ListDinas({ name }) {
 
               </div>
             </div>
+            <Dialog open={open} onClose={handleClose}>
+              <DialogTitle>Hapus Surat Permohonan</DialogTitle>
+              <DialogContent>
+                <DialogContentText>
+                  Apakah anda yakin akan menghapus surat permohonan Izin Praktik Tenaga Ahli Gizi - Baru?
+                </DialogContentText>
+
+              </DialogContent>
+              <DialogActions>
+                <Button className="button-outline-mpp" onClick={handleClose} variant="outline">Cancel</Button>
+                <Button className="button-mpp" onClick={handleClose}>Hapus</Button>
+              </DialogActions>
+            </Dialog>
             <TableContainer component={Paper} className="table-mpp shadow-none">
               <Table sx={{ minWidth: 650 }} aria-label="simple table" className=" ">
                 <TableHead>
@@ -82,36 +162,60 @@ export default function ListDinas({ name }) {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {rows.map((row) => (
-                    <TableRow
-                      key={row.name}
-                      sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                    >
+                  {progress === true ?
+                    <>
+                      <TableRow
+                        sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                      >
+                        <TableCell component="th" scope="row">
+                          <Skeleton animation="wave" />
+                        </TableCell>
+                        <TableCell component="th" scope="row">
+                          <Skeleton animation="wave" />
+                        </TableCell>
+                        <TableCell>   <Skeleton animation="wave" /></TableCell>
+                        <TableCell>   <Skeleton animation="wave" /></TableCell>
+                        <TableCell>   <Skeleton animation="wave" /></TableCell>
+                      </TableRow>
+                    </>
+                  : dinas.data.map((row) => (
+                  <TableRow
+                    key={row.name}
+                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                  >
 
-                      <TableCell component="th" scope="row">
-                        {nomor++}
-                      </TableCell>
-                      <TableCell >{row.name}</TableCell>
-                      <TableCell >{row.calories}</TableCell>
-                      <TableCell >{row.fat}</TableCell>
+                    <TableCell component="th" scope="row">
+                      {nomor++}
+                    </TableCell>
+                    <TableCell >Kode</TableCell>
+                    <TableCell >{row.namaDinas}</TableCell>
+                    <TableCell >{row.singkatan}</TableCell>
+                    <TableCell >{ }</TableCell>
 
 
-                      <TableCell>
-                        <div className="action">
-                          <Link underline="hover"
-
+                    <TableCell>
+                      <div className="action">
+                   
+                          <Button underline="hover"
                             color="inherit"
-                            href="/master-dinas/kategori-bidang/" >
+                          onClick={() => Router.push(`/master-dinas/kategori-bidang/?namaDinas=${row.namaDinas}&idDinas=${row._id}`, undefined, { shallow: true })}  >
+                              
                             <a>
-
                               <h3><LoginIcon /></h3>
                             </a>
+                          </Button>
+                      
+                        <button>
+                          <Link href="/">
+                            <a>
+                              <EditIcon />
+                            </a>
                           </Link>
-                          <Link href="/"><EditIcon /></Link>
-                          <Link href="/"><DeleteIcon /></Link>
-                        </div>
-                      </TableCell>
-                    </TableRow>
+                        </button>
+                        <button onClick={handleClickOpen}><DeleteIcon /></button>
+                      </div>
+                    </TableCell>
+                  </TableRow>
                   ))}
                 </TableBody>
               </Table>
@@ -122,6 +226,7 @@ export default function ListDinas({ name }) {
             <Pagination count={10} page={page} onChange={handleChange} />
           </CardActions>
         </Card>
+
 
       </div>
     </>

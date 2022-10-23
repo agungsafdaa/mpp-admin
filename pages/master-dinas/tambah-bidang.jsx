@@ -1,19 +1,31 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Head from "next/head";
 import Card from '@mui/material/Card';
 import Router from 'next/router'
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
-
 import Typography from '@mui/material/Typography'
 import TextField from '@mui/material/TextField';
 import ControlPointIcon from '@mui/icons-material/ControlPoint';
+import LoadingBar from '../../components/Loading';
+import Cookies from 'js-cookie'
+import axios from 'axios';
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
+import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator'
+import { isAuthenticated } from '../../auth';
+import { useRouter } from 'next/router';
 
 export default function Tambah() {
-    const [state, setState] = useState({});
+    const authenticated = isAuthenticated()
+    const router = useRouter()
+    const MySwal = withReactContent(Swal)
+    const [state, setState] = useState({})
+    const [loading, setLoading] = useState(true);
+    const [progress, setProgress] = useState(false)
     const [inputFields, setInputFields] = useState([
         { seksi: '' }
-      ])
+    ])
     const handleChange = async ({ target: { name, value } }) => {
 
         setState({
@@ -21,6 +33,60 @@ export default function Tambah() {
             [name]: value,
         });
     }
+
+    const tambahData = async () => {
+
+
+        setProgress(true)
+
+        try {
+            let url = `${process.env.DB_API}dinas/add-bidang/${router.query.idDinas}`
+
+            const response = await axios.put(url, {
+                namaBidang: state.namaBidang
+            }, {
+                headers: {
+                    Authorization: Cookies.get('token')
+                }
+            });
+
+            if (response.status === 200) {
+                setProgress(false)
+                MySwal.fire({
+                    title: "Berhasil!",
+                    icon: "success",
+                    text: response.data.message,
+
+                })
+                setTimeout(() => {
+                    Router.push('/master-dinas')
+                }, 2000);
+            }
+
+
+        } catch (error) {
+
+            MySwal.fire({
+                title: "Error!",
+                text: error.response.data.message,
+                icon: "error",
+                buttons: true,
+            })
+
+
+            setProgress(false)
+        }
+        // }
+
+
+    }
+
+    useEffect(() => {
+        // if user is not authenticated, redirect to login page
+        if (!authenticated) Router.push('/')
+        setLoading(false)
+    })
+    if (loading) return <p>Loading...</p>
     return (
         <>
             <Head>
@@ -28,28 +94,31 @@ export default function Tambah() {
                 <meta name="description" content="DLHK Kota Palembang" />
                 <link rel="icon" href="../img/logo.png" />
             </Head>
-            <div className="container-mpp">
-                <Card className="card-mpp kategori-dinas">
-                    <CardContent>
-                        <div className="heading">
-                            <h3>Tambah Kategori Bidang</h3>
+            {progress === true ? <LoadingBar open={progress} /> :
+                <>
+                  <ValidatorForm onSubmit={tambahData}>
+                    <div className="container-mpp">
+                        <Card className="card-mpp kategori-dinas">
+                            <CardContent>
+                                <div className="heading">
+                                    <h3>Tambah Kategori Bidang</h3>
 
-                        </div>
+                                </div>
 
-                        <div className="form-input">
-                            <Typography>
-                                <span className="required"> *</span> Nama Dinas
-                            </Typography>
-                            <TextField
-                                fullWidth
-                                name="kategori_dinas"
-                                placeholder='nama dinas '
-                                value={'Dinas Kesehatan Kota Palembang'}
-                                disabled
-                                onChange={handleChange}
-                            />
-                        </div>
-                        <div className="form-input">
+                                <div className="form-input">
+                                    <Typography>
+                                        <span className="required"> *</span> Nama Dinas
+                                    </Typography>
+                                    <TextField
+                                        fullWidth
+                                        name="kategori_dinas"
+                                        placeholder='nama dinas '
+                                        value={router.query.namaDinas}
+                                        disabled
+                                        onChange={handleChange}
+                                    />
+                                </div>
+                                {/* <div className="form-input">
                             <Typography>
                                 <span className="required"> *</span> Kode Dinas
                             </Typography>
@@ -60,23 +129,23 @@ export default function Tambah() {
                                 value={state.kode || ''}
                                 onChange={handleChange}
                             />
-                        </div>
+                        </div> */}
 
-                        <div className="form-input">
-                            <Typography>
-                                <span className="required"> *</span> Nama Bidang
-                            </Typography>
-                            <TextField
-                                fullWidth
-                                name="nama_bidang"
-                                placeholder='Nama Bidang'
+                                <div className="form-input">
+                                    <Typography>
+                                        <span className="required"> *</span> Nama Bidang
+                                    </Typography>
+                                    <TextField
+                                        fullWidth
+                                        name="namaBidang"
+                                        placeholder='Nama Bidang'
 
-                                value={state.nama_bidang || ''}
-                                onChange={handleChange}
-                            />
-                        </div>
+                                        value={state.namaBidang || ''}
+                                        onChange={handleChange}
+                                    />
+                                </div>
 
-                        <div className="form-input">
+                                {/* <div className="form-input">
                             <Typography>
                                 <span className="required"> *</span> Seksi Bidang
                             </Typography>
@@ -93,22 +162,24 @@ export default function Tambah() {
                                 <span className="required"> *</span> Tambah Seksi Bidang
                             </Typography>
                             <Button className="button-outline-dashed"  variant="contained" ><ControlPointIcon/> Tambah Seksi</Button>
-                        </div>
+                        </div> */}
 
 
 
-                    </CardContent>
+                            </CardContent>
 
-                </Card>
-            </div>
-            <Card className="card-action">
-                <CardContent>
-                    <div className="action">
-                        <Button variant="outlined" className="button-outline-mpp" onClick={() => Router.push('/master-dinas')}>batal</Button>
-                        <Button variant="contained" className="button-mpp">Simpan</Button>
+                        </Card>
                     </div>
-                </CardContent>
-            </Card>
+                    <Card className="card-action">
+                        <CardContent>
+                            <div className="action">
+                                <Button variant="outlined" className="button-outline-mpp" onClick={() => Router.push('/master-dinas')}>batal</Button>
+                                <Button variant="contained" type="submit" className="button-mpp">Simpan</Button>
+                            </div>
+                        </CardContent>
+                    </Card>
+                    </ValidatorForm>
+                </>}
         </>
     )
 }

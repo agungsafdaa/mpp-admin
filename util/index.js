@@ -7,7 +7,7 @@ export const getTokenFromCookie = () => {
 }
 
 export const setTokenCookie = (value) => {
-  
+    
   Cookies.set('token', value) // 1 day expiry
 }
 

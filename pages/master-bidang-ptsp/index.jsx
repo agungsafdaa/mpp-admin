@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import Head from 'next/head';
 import Card from '@mui/material/Card';
+import Head from 'next/head';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
@@ -20,24 +20,39 @@ import Pagination from '@mui/material/Pagination';
 import LoginIcon from '@mui/icons-material/Login';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { useRouter } from 'next/router'
-import Router from "next/router"
+import Dialog from '@mui/material/Dialog';
+import DialogTitle from '@mui/material/DialogTitle';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogActions from '@mui/material/DialogActions';
 function createData(name, calories, fat, carbs, protein) {
   return { name, calories, fat, carbs, protein };
 }
 
 const rows = [
-  createData('Bidang Lingkungan Dinas Kesehatan', '1'),
-  createData('Bidang Sarana Dinas Kesehatan', '2'),
-  createData('Bidang SDM Dinas Kesehatan', '4'),
+  createData('Bidang Penyelenggaraan Pelayanan Perizinan dan Non Perizinan Pembangunan dan Lingkungan', '3'),
+  createData('Bidang Penyelenggaraan Pelayanan Perizinan dan Non Perizinan Perekonomian dan Kesra', '3'),
+  createData('Bidang Penyelenggaraan Pelayanan Perizinan dan Non Perizinan Pembangunan dan Lingkungan',  '3'),
+  createData('Bidang Penyelenggaraan Pelayanan Perizinan dan Non Perizinan Perekonomian dan Kesra', '3'),
 ];
-export default function KategoriBidang() {
-  const router = useRouter()
+export default function ListDinas({ name }) {
   const [page, setPage] = useState(1);
+  const [open, setOpen] = useState(false);
+
   let nomor = 1;
   const handleChange = (event, value) => {
     setPage(value);
   };
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   return (
     <>
       <Head>
@@ -49,17 +64,10 @@ export default function KategoriBidang() {
         <Card className="card-mpp kategori-dinas">
           <CardContent>
             <div className="heading">
-              <h3>Kategori Bidang Dinas Kesehatan</h3>
+              <h3>Master Bidang/Seksi PTSP</h3>
               <div className="action">
                 <Button className="button-mpp" variant="contained">
-                  <Button underline="hover"
-                    color="inherit"
-                    onClick={() => Router.push(`/master-dinas/tambah-bidang/?namaDinas=${router.query.namaDinas}&idDinas=${router.query.idDinas}`, undefined, { shallow: true })}  >
-
-                    
-                    Tambah
-                   
-                  </Button>
+                  <Link href="/master-bidang-ptsp/tambah-bidang">Tambah</Link>
                 </Button>
                 <Paper
                   component="form"
@@ -78,13 +86,27 @@ export default function KategoriBidang() {
 
               </div>
             </div>
+            <Dialog open={open} onClose={handleClose}>
+              <DialogTitle>Hapus Surat Permohonan</DialogTitle>
+              <DialogContent>
+                <DialogContentText>
+                  Apakah anda yakin akan menghapus surat permohonan Izin Praktik Tenaga Ahli Gizi - Baru?
+                </DialogContentText>
+
+              </DialogContent>
+              <DialogActions>
+                <Button className="button-outline-mpp" onClick={handleClose} variant="outline">Cancel</Button>
+                <Button className="button-mpp" onClick={handleClose}>Hapus</Button>
+              </DialogActions>
+            </Dialog>
             <TableContainer component={Paper} className="table-mpp shadow-none">
               <Table sx={{ minWidth: 650 }} aria-label="simple table" className=" ">
                 <TableHead>
                   <TableRow>
                     <TableCell>No</TableCell>
-                    <TableCell >Kategori Bidang Dinas</TableCell>
+                    <TableCell >Nama Persyaratan</TableCell>
                     <TableCell >Jumlah Seksi</TableCell>
+                 
                     <TableCell >Aksi</TableCell>
                   </TableRow>
                 </TableHead>
@@ -100,19 +122,28 @@ export default function KategoriBidang() {
                       </TableCell>
                       <TableCell >{row.name}</TableCell>
                       <TableCell >{row.calories}</TableCell>
+                      <TableCell >{row.fat}</TableCell>
+
 
                       <TableCell>
                         <div className="action">
-                          <Button underline="hover"
-                            color="inherit"
-                            onClick={() => Router.push(`/master-dinas/kategori-bidang/?namaDinas=${row.namaDinas}&idDinas=${row._id}`, undefined, { shallow: true })}  >
-
-                            <a>
-                              <h3><LoginIcon /></h3>
-                            </a>
-                          </Button>
-                          <Link href="/"><EditIcon /></Link>
-                          <Link href="/"><DeleteIcon /></Link>
+                          <button>
+                            <Link underline="hover"
+                              color="inherit"
+                              href="/master-dinas/kategori-bidang/" >
+                              <a>
+                                <h3><LoginIcon /></h3>
+                              </a>
+                            </Link>
+                          </button>
+                          <button>
+                            <Link href="/">
+                              <a>
+                                <EditIcon />
+                              </a>
+                            </Link>
+                          </button>
+                          <button onClick={handleClickOpen}><DeleteIcon /></button>
                         </div>
                       </TableCell>
                     </TableRow>
@@ -129,6 +160,7 @@ export default function KategoriBidang() {
 
       </div>
     </>
+
   )
 }
 

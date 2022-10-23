@@ -27,7 +27,8 @@ export default function BreadcrumbsComponents() {
                 Referensi
             </Link>,
             <Typography key="3" color="text.primary">
-                {router.pathname.slice(1)}
+                {/* {router.pathname ? router.pathname.slice(1).replaceAll('-', ' ').replace(/\b\w/g, c => c.toUpperCase()).replace('?', ' / ') : ""} */}
+            
             </Typography>,
         </Breadcrumbs>
 

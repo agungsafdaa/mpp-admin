@@ -7,6 +7,19 @@
     }
 
     .menu-mpp{
+        .menu{
+           span{
+            font-family: 'Inter';
+            font-style: normal;
+            font-weight: 400;
+            font-size: 14px;
+            line-height: 175%;
+           }
+        }
+
+        .center{
+            justify-content: center;
+        }
         &:hover{
             background: #145D9C;
             color:#fff;
