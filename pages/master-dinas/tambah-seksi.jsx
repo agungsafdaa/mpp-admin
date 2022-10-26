@@ -60,7 +60,7 @@ export default function Tambah() {
 
                 })
                 setTimeout(() => {
-                    Router.push('/master-dinas')
+                    Router.back()
                 }, 2000);
             }
 

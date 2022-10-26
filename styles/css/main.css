@@ -59,6 +59,9 @@ button {
   margin: 20px 0; }
   .form-input .MuiFormControl-root {
     width: 700px; }
+    @media screen and (max-width: 1500px) {
+      .form-input .MuiFormControl-root {
+        width: 500px; } }
     .form-input .MuiFormControl-root .Mui-disabled {
       background: #d7d7d7; }
   .form-input .required {

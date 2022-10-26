@@ -83,7 +83,7 @@ export default function KategoriBidang() {
         <Card className="card-mpp kategori-dinas">
           <CardContent>
             <div className="heading">
-              <h3>Kategori Bidang Dinas Kesehatan</h3>
+              <h3>Kategori Bidang {router.query.namaDinas}</h3>
               <div className="action">
                 <Button className="button-mpp" variant="contained">
                   <Button underline="hover"

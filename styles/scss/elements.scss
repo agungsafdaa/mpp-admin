@@ -76,12 +76,13 @@ button {
     gap: 220px;
     align-items: center;
     color: #52575C;
-
     margin: 20px 0;
 
     .MuiFormControl-root {
         width: 700px;
-
+        @include middle{
+            width:500px;
+        }
         .Mui-disabled {
             background: #d7d7d7;
         }

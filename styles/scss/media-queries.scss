@@ -10,7 +10,7 @@ $screen-sm-max: 959px;
 $screen-md-max: 1279px;
 $screen-lg-max: 1919px;
 $screen-xl-max: 5000px;
-
+$screen-middle-max: 1500px;
 // media devices
 @mixin xs {
   @media screen and (max-width: #{$screen-xs-max}) {
@@ -60,6 +60,14 @@ $screen-xl-max: 5000px;
     @content;
   }
 }
+
+@mixin middle {
+  @media screen and (max-width: #{$screen-middle-max}) {
+    @content;
+  }
+}
+
+
 
 @mixin lt-xl {
   @media screen and (max-width: #{$screen-lg-max}) {

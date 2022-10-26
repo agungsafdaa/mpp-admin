@@ -114,7 +114,7 @@ export default function Tambah() {
                       <span className="required"> *</span> nama Dinas
                     </Typography>
                     <TextField
-                      fullWidth
+                      
                       name="namaDinas"
                       placeholder='nama dinas'
                       value={state.namaDinas || ''}
@@ -127,7 +127,7 @@ export default function Tambah() {
                 <span className="required"> *</span> Kategori Dinas / Bidang
               </Typography>
               <TextField
-                fullWidth
+                
                 name="kategori_dinas"
                 placeholder='kategori dinas '
                 value={state.kategori_dinas || ''}
@@ -139,7 +139,7 @@ export default function Tambah() {
                       <span className="required"> *</span> Singkatan Dinas
                     </Typography>
                     <TextField
-                      fullWidth
+                      
                       name="singkatan"
                       placeholder='singkatan dinas '
                       value={state.singkatan || ''}
@@ -152,7 +152,7 @@ export default function Tambah() {
                       <span className="required"> *</span> Alamat Dinas
                     </Typography>
                     <TextField
-                      fullWidth
+                      
                       name="alamat_dinas"
                       placeholder='alamat dinas'
                       multiline
@@ -166,7 +166,7 @@ export default function Tambah() {
                       <span className="required"> *</span> No Telp Dinas
                     </Typography>
                     <TextField
-                      fullWidth
+                      
                       type="tel"
                       name="noTelp"
                       placeholder='No Telp Dinas'
@@ -181,7 +181,7 @@ export default function Tambah() {
                       <span className="required"> *</span> Nama Kepala Dinas
                     </Typography>
                     <TextField
-                      fullWidth
+                      
                       name="kepalaDinas"
                       placeholder='Nama Kepala Dinas'
                       value={state.kepalaDinas || ''}
@@ -193,7 +193,7 @@ export default function Tambah() {
                       <span className="required"> *</span>  NIP Kepala Dinas
                     </Typography>
                     <TextField
-                      fullWidth
+                      
                       name="nipKelapaDinas"
                       placeholder='Nip Kepala Dinas'
                       value={state.nipKelapaDinas || ''}
@@ -205,7 +205,7 @@ export default function Tambah() {
                       <span className="required"> *</span> Pangkat Kepala Dinas
                     </Typography>
                     <TextField
-                      fullWidth
+                      
                       name="pangkatKepalaDinas"
                       placeholder='Pangkat Kepala Dinas'
                       value={state.pangkatKepalaDinas || ''}
@@ -217,7 +217,7 @@ export default function Tambah() {
                       <span className="required"> *</span> Golongan Kepala Dinas
                     </Typography>
                     <TextField
-                      fullWidth
+                      
                       name="golonganKepalaDinas"
                       placeholder='Golongan Kepala Dinas'
                       value={state.golonganKepalaDinas || ''}
