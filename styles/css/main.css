@@ -105,11 +105,11 @@ button {
   border: 1px solid #E8E8E8; }
 
 .table-mpp {
-  border: 1px solid #E8E8E8;
-  border-radius: 8px 8px 0px 0px; }
+  border: 1px solid #E8E8E8 !important;
+  border-radius: 8px 8px 0px 0px !important; }
   .table-mpp .action {
     display: flex;
-    gap: 10px; }
+    gap: 20px; }
     .table-mpp .action svg {
       color: #8A92A6; }
 
@@ -130,8 +130,18 @@ button {
     gap: 20px;
     align-items: center;
     justify-content: flex-end; }
+    .card-action .action svg {
+      color: #8A92A6; }
     .card-action .action button {
       width: 100px; }
+
+.text-underline {
+  text-decoration: underline !important;
+  color: #145D9C !important;
+  font-weight: 500 !important;
+  font-size: 14px !important;
+  line-height: 180% !important;
+  text-transform: capitalize !important; }
 
 .sidebar-mpp .heading {
   display: flex;

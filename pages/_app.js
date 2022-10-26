@@ -8,11 +8,9 @@ function MyApp({ Component, pageProps }) {
   const [loading,setLoading] = useState(true)
   
   useEffect(() => {
-    const user = getTokenFromCookie() // check for cookie
-
+    const user = getTokenFromCookie() 
     if(user) authenticateUser()
     setLoading(false)
-    
   })
 
 

@@ -131,7 +131,7 @@ const Layout = ({ children }) => {
 
   return (
     <>
-      {router.pathname === '/' ?
+      {authenticated === false ?
         <>
           <Divider />
           <Login />
@@ -242,9 +242,9 @@ const Layout = ({ children }) => {
             <BreadcrumbsMobile />
 
             {children.props.statusCode === undefined ?
-              <Context.Provider value={[globalState, setGlobalState]}>
+              <div value={authenticated}>
                 {children}
-              </Context.Provider>
+              </div>
 
               : <Custom404 />}
 

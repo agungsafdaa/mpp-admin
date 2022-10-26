@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Head from 'next/head';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
@@ -22,22 +22,56 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useRouter } from 'next/router'
 import Router from "next/router"
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
-
-const rows = [
-  createData('Bidang Lingkungan Dinas Kesehatan', '1'),
-  createData('Bidang Sarana Dinas Kesehatan', '2'),
-  createData('Bidang SDM Dinas Kesehatan', '4'),
-];
+import Cookies from 'js-cookie'
+import Skeleton from '@mui/material/Skeleton';
+import axios from 'axios';
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
+import { isAuthenticated } from '../../auth';
 export default function KategoriBidang() {
   const router = useRouter()
+  const authenticated = isAuthenticated()
+  const MySwal = withReactContent(Swal)
   const [page, setPage] = useState(1);
+  const [bidang, setBidang] = useState([])
+  const [progress, setProgress] = useState(false);
+
   let nomor = 1;
-  const handleChange = (event, value) => {
-    setPage(value);
-  };
+  const listBidang = async () => {
+    setProgress(true)
+
+    try {
+      let url = `${process.env.DB_API}dinas/list-bidang/${router.query.idDinas}`
+      const response = await axios.get(url, {
+        headers: {
+          Authorization: Cookies.get('token')
+        }
+      });
+
+      if (response.status === 200) {
+        setProgress(false)
+        setBidang(response.data.Bidang)
+
+      }
+
+    } catch (error) {
+
+      MySwal.fire({
+        title: "Error!",
+        text: error.response.data.message,
+        icon: "error",
+        button: "batal",
+      });
+      setProgress(true)
+    }
+  }
+
+  useEffect(() => {
+    listBidang()
+  }, [])
+
+
+
   return (
     <>
       <Head>
@@ -55,26 +89,10 @@ export default function KategoriBidang() {
                   <Button underline="hover"
                     color="inherit"
                     onClick={() => Router.push(`/master-dinas/tambah-bidang/?namaDinas=${router.query.namaDinas}&idDinas=${router.query.idDinas}`, undefined, { shallow: true })}  >
-
-                    
                     Tambah
-                   
                   </Button>
                 </Button>
-                <Paper
-                  component="form"
-                  className="shadow-none form-mpp"
-                  sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 400 }}
-                >
-                  <InputBase
-                    sx={{ ml: 1, flex: 1 }}
-                    placeholder="Search "
-                    inputProps={{ 'aria-label': 'search ' }}
-                  />
-                  <IconButton type="button" aria-label="search">
-                    <SearchIcon />
-                  </IconButton>
-                </Paper>
+
 
               </div>
             </div>
@@ -89,42 +107,60 @@ export default function KategoriBidang() {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {rows.map((row) => (
-                    <TableRow
-                      key={row.name}
-                      sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                    >
+                  {bidang.map((row) => (
+                 
+                      <TableRow
+                        key={row._id}
+                        sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                      >
+                        <TableCell component="th" scope="row">
+                          {nomor++}
+                        </TableCell>
+                        <TableCell >{row.namaBidang}</TableCell>
+                        <TableCell >
+                          {row.Seksi.length === 0 ?
+                            <>
+                              <Button underline="hover"
+                                color="inherit"
+                                className="text-underline"
+                                onClick={() => Router.push(`/master-dinas/tambah-seksi/?namaBidang=${row.namaBidang}&idDinas=${router.query.idDinas}`, undefined, { shallow: true })}  >
+                                Tambah Seksi
+                              </Button>
+                            </>
+                            :
+                            row.Seksi.length
+                          }
+                        </TableCell>
+                        <TableCell>
+                          <div className="action">
+                            <button underline="hover"
+                              color="inherit"
+                              onClick={() => Router.push(`/master-dinas/tambah-seksi/?namaBidang=${row.namaBidang}&idDinas=${router.query.idDinas}`, undefined, { shallow: true })}  >
+                              <a>
+                                Tambah Seksi
+                              </a>
+                            </button>
+                            <button>
+                              <a>
+                                <EditIcon />
+                              </a></button>
+                            <button>
+                              <a>
+                                <DeleteIcon />
+                              </a>
+                            </button>
+                          </div>
+                        </TableCell>
+                      </TableRow>
+                  
 
-                      <TableCell component="th" scope="row">
-                        {nomor++}
-                      </TableCell>
-                      <TableCell >{row.name}</TableCell>
-                      <TableCell >{row.calories}</TableCell>
-
-                      <TableCell>
-                        <div className="action">
-                          <Button underline="hover"
-                            color="inherit"
-                            onClick={() => Router.push(`/master-dinas/kategori-bidang/?namaDinas=${row.namaDinas}&idDinas=${row._id}`, undefined, { shallow: true })}  >
-
-                            <a>
-                              <h3><LoginIcon /></h3>
-                            </a>
-                          </Button>
-                          <Link href="/"><EditIcon /></Link>
-                          <Link href="/"><DeleteIcon /></Link>
-                        </div>
-                      </TableCell>
-                    </TableRow>
                   ))}
                 </TableBody>
               </Table>
             </TableContainer>
 
           </CardContent>
-          <CardActions>
-            <Pagination count={10} page={page} onChange={handleChange} />
-          </CardActions>
+
         </Card>
 
       </div>

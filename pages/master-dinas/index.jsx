@@ -11,12 +11,6 @@ import InputBase from '@mui/material/InputBase';
 import IconButton from '@mui/material/IconButton'
 import Paper from '@mui/material/Paper';
 import SearchIcon from '@mui/icons-material/Search';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
 import Pagination from '@mui/material/Pagination';
 import LoginIcon from '@mui/icons-material/Login';
 import EditIcon from '@mui/icons-material/Edit';
@@ -33,8 +27,29 @@ import axios from 'axios';
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import { useRouter } from 'next/router'
+import {
+  DataGrid,
+  gridPageCountSelector,
+  gridPageSelector,
+  useGridApiContext,
+  useGridSelector,
+} from '@mui/x-data-grid';
+function CustomPagination() {
+  const apiRef = useGridApiContext();
+  const page = useGridSelector(apiRef, gridPageSelector);
+  const pageCount = useGridSelector(apiRef, gridPageCountSelector);
 
-export default function ListDinas() {
+  return (
+    <Pagination
+      color="primary"
+      count={pageCount}
+      page={page + 1}
+      onChange={(event, value) => apiRef.current.setPage(value - 1)}
+    />
+  );
+}
+export default function ListDinas({value}) {
+  console.log(value)
   const authenticated = isAuthenticated()
   const MySwal = withReactContent(Swal)
   const router = useRouter()
@@ -43,11 +58,9 @@ export default function ListDinas() {
   const [progress, setProgress] = useState(false);
   const [loading, setLoading] = useState(true)
   const [dinas, setDinas] = useState([])
+ 
 
-  let nomor = 1;
-  const handleChange = (event, value) => {
-    setPage(value);
-  };
+  let nomor = 0;
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -71,7 +84,7 @@ export default function ListDinas() {
 
       if (response.status === 200) {
         setProgress(false)
-        setDinas(response.data)
+        setDinas(response.data.data)
 
       }
 
@@ -88,6 +101,45 @@ export default function ListDinas() {
   }
 
 
+  const columns = [
+
+    {
+      field: 'kode', headerName: 'Kode Dinas', width: 150
+
+    },
+    {
+      field: 'namaDinas', headerName: 'Nama Dinas', width: 450,
+    },
+    {
+      field: 'singkatan', headerName: 'Singkatan Dinas', width: 300,
+    },
+    {
+      field: 'Aksi',
+      headerName: 'Aksi',
+      width: 200,
+      renderCell: (params) => {
+        return (
+          <div className="action">
+            <a underline="hover"
+              color="inherit"
+              onClick={() => Router.push(`/master-dinas/kategori-bidang/?namaDinas=${params.row.namaDinas}&idDinas=${params.row._id}`, undefined, { shallow: true })}  >
+              <LoginIcon />
+            </a>
+            <Link href="/">
+              <a>
+                <EditIcon />
+              </a>
+            </Link>
+            <a onClick={handleClickOpen}><DeleteIcon /></a>
+          </div>
+
+        )
+      }
+    }
+  ];
+
+
+  
 
   useEffect(() => {
     listDinas()
@@ -97,12 +149,7 @@ export default function ListDinas() {
     window.scrollTo(0, 0)
   }, [])
 
-  useEffect(() => {
-    // if user is not authenticated, redirect to login page
-    if (!authenticated) Router.push('/')
-    setLoading(false)
-  })
-  if (loading) return <p>Loading...</p>
+
 
   return (
     <>
@@ -128,6 +175,7 @@ export default function ListDinas() {
                   <InputBase
                     sx={{ ml: 1, flex: 1 }}
                     placeholder="Search "
+                    onChange={e => setSearchVal(e.target.value)}
                     inputProps={{ 'aria-label': 'search ' }}
                   />
                   <IconButton type="button" aria-label="search">
@@ -150,84 +198,33 @@ export default function ListDinas() {
                 <Button className="button-mpp" onClick={handleClose}>Hapus</Button>
               </DialogActions>
             </Dialog>
-            <TableContainer component={Paper} className="table-mpp shadow-none">
-              <Table sx={{ minWidth: 650 }} aria-label="simple table" className=" ">
-                <TableHead>
-                  <TableRow>
-                    <TableCell>No</TableCell>
-                    <TableCell >Kode Dinas</TableCell>
-                    <TableCell >Nama Dinas</TableCell>
-                    <TableCell >Singkatan Dinas</TableCell>
-                    <TableCell >Aksi</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {progress === true ?
-                    <>
-                      <TableRow
-                        sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                      >
-                        <TableCell component="th" scope="row">
-                          <Skeleton animation="wave" />
-                        </TableCell>
-                        <TableCell component="th" scope="row">
-                          <Skeleton animation="wave" />
-                        </TableCell>
-                        <TableCell>   <Skeleton animation="wave" /></TableCell>
-                        <TableCell>   <Skeleton animation="wave" /></TableCell>
-                        <TableCell>   <Skeleton animation="wave" /></TableCell>
-                      </TableRow>
-                    </>
-                  : dinas.data.map((row) => (
-                  <TableRow
-                    key={row.name}
-                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                  >
-
-                    <TableCell component="th" scope="row">
-                      {nomor++}
-                    </TableCell>
-                    <TableCell >Kode</TableCell>
-                    <TableCell >{row.namaDinas}</TableCell>
-                    <TableCell >{row.singkatan}</TableCell>
-                    <TableCell >{ }</TableCell>
-
-
-                    <TableCell>
-                      <div className="action">
-                   
-                          <Button underline="hover"
-                            color="inherit"
-                          onClick={() => Router.push(`/master-dinas/kategori-bidang/?namaDinas=${row.namaDinas}&idDinas=${row._id}`, undefined, { shallow: true })}  >
-                              
-                            <a>
-                              <h3><LoginIcon /></h3>
-                            </a>
-                          </Button>
-                      
-                        <button>
-                          <Link href="/">
-                            <a>
-                              <EditIcon />
-                            </a>
-                          </Link>
-                        </button>
-                        <button onClick={handleClickOpen}><DeleteIcon /></button>
-                      </div>
-                    </TableCell>
-                  </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </TableContainer>
-
+            {progress === true ?
+              <>
+                <Skeleton animation="wave" />
+                <Skeleton animation="wave" />
+                <Skeleton animation="wave" />
+              </>
+              :
+              <>
+                <DataGrid
+                  getRowId={(dinas) => dinas._id}
+                  rows={dinas}
+                  columns={columns}
+                  rowHeight={100}
+                  autoHeight
+                  className="table-mpp"
+                  pagination
+                  disableColumnFilter={true}
+                  pageSize={10}
+                  rowsPerPageOptions={[8]}
+                  components={{
+                    Pagination: CustomPagination,
+                  }}
+                />
+              </>
+            }
           </CardContent>
-          <CardActions>
-            <Pagination count={10} page={page} onChange={handleChange} />
-          </CardActions>
         </Card>
-
-
       </div>
     </>
 

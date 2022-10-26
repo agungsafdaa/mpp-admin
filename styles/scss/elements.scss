@@ -34,18 +34,19 @@ a {
     }
 }
 
-.button-outline-dashed{
-    border: 1px dashed #145D9C!important;
-    background:none;
-    color:#145D9C;
+.button-outline-dashed {
+    border: 1px dashed #145D9C !important;
+    background: none;
+    color: #145D9C;
     text-transform: capitalize;
-    &:hover{
-        color:#fff;
+
+    &:hover {
+        color: #fff;
     }
 }
 
-button{
-    background:none;
+button {
+    background: none;
 }
 
 .button-outline-mpp {
@@ -80,6 +81,7 @@ button{
 
     .MuiFormControl-root {
         width: 700px;
+
         .Mui-disabled {
             background: #d7d7d7;
         }
@@ -97,17 +99,18 @@ button{
         .MuiFormControl-root {
             width: 100%;
         }
-        button{
+
+        button {
             width: 100%;
         }
     }
 
-    button{
+    button {
         width: 700px;
         display: flex;
         align-items: center;
         gap: 10px;
-    
+
     }
 }
 
@@ -151,12 +154,12 @@ button{
 }
 
 .table-mpp {
-    border: 1px solid #E8E8E8;
-    border-radius: 8px 8px 0px 0px;
+    border: 1px solid #E8E8E8 !important;
+    border-radius: 8px 8px 0px 0px !important;
 
     .action {
         display: flex;
-        gap: 10px;
+        gap: 20px;
 
         svg {
             color: #8A92A6;
@@ -176,17 +179,33 @@ button{
     left: 0;
     bottom: 0;
     width: 100%;
-   
+
     margin: 20px 0 0 0;
-   
+
     .action {
         display: flex;
         gap: 20px;
         align-items: center;
+
+        svg {
+            color: #8A92A6;
+        }
+
         justify-content: flex-end;
-        button{
-            width:100px;
+
+        button {
+            width: 100px;
         }
     }
 }
 
+
+
+.text-underline {
+    text-decoration: underline !important;
+    color: #145D9C !important;
+    font-weight: 500!important;
+    font-size: 14px!important;
+    line-height: 180%!important;
+    text-transform: capitalize!important;
+}
