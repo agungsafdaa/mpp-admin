@@ -80,9 +80,11 @@ button {
 
     .MuiFormControl-root {
         width: 700px;
-        @include middle{
-            width:500px;
+
+        @include middle {
+            width: 500px;
         }
+
         .Mui-disabled {
             background: #d7d7d7;
         }
@@ -146,6 +148,11 @@ button {
             .button-mpp {
                 width: 140px;
             }
+
+            @include lt-md {
+                flex-direction: column;
+                gap: 10px;
+            }
         }
     }
 }
@@ -205,8 +212,31 @@ button {
 .text-underline {
     text-decoration: underline !important;
     color: #145D9C !important;
-    font-weight: 500!important;
-    font-size: 14px!important;
-    line-height: 180%!important;
-    text-transform: capitalize!important;
+    font-weight: 500 !important;
+    font-size: 14px !important;
+    line-height: 180% !important;
+    text-transform: capitalize !important;
+}
+
+.MuiDataGrid-footerContainer {
+    justify-content: flex-start !important;
+    padding:20px 0;
+    button{
+        margin: 0 5px;
+    }
+    .Mui-selected {
+        border-radius: 5px;
+    }
+
+    .Mui-disabled {
+        background: #ECECEC;
+        border-radius: 5px;
+    }
+
+    .MuiPaginationItem-previousNext {
+        background: #FFFFFF;
+        border: 1px solid #BDBDBD;
+        border-radius: 2px;
+    }
+
 }

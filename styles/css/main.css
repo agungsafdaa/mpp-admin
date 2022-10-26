@@ -103,6 +103,10 @@ button {
       justify-content: space-between; }
       .card-mpp .heading .action .button-mpp {
         width: 140px; }
+      @media screen and (max-width: 959px) {
+        .card-mpp .heading .action {
+          flex-direction: column;
+          gap: 10px; } }
 
 .form-mpp {
   border: 1px solid #E8E8E8; }
@@ -145,6 +149,21 @@ button {
   font-size: 14px !important;
   line-height: 180% !important;
   text-transform: capitalize !important; }
+
+.MuiDataGrid-footerContainer {
+  justify-content: flex-start !important;
+  padding: 20px 0; }
+  .MuiDataGrid-footerContainer button {
+    margin: 0 5px; }
+  .MuiDataGrid-footerContainer .Mui-selected {
+    border-radius: 5px; }
+  .MuiDataGrid-footerContainer .Mui-disabled {
+    background: #ECECEC;
+    border-radius: 5px; }
+  .MuiDataGrid-footerContainer .MuiPaginationItem-previousNext {
+    background: #FFFFFF;
+    border: 1px solid #BDBDBD;
+    border-radius: 2px; }
 
 .sidebar-mpp .heading {
   display: flex;

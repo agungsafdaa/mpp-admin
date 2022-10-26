@@ -43,13 +43,13 @@ function CustomPagination() {
     <Pagination
       color="primary"
       count={pageCount}
+      className="pagination-mpp"
       page={page + 1}
       onChange={(event, value) => apiRef.current.setPage(value - 1)}
     />
   );
 }
 export default function ListDinas({value}) {
-  console.log(value)
   const authenticated = isAuthenticated()
   const MySwal = withReactContent(Swal)
   const router = useRouter()
@@ -104,14 +104,14 @@ export default function ListDinas({value}) {
   const columns = [
 
     {
-      field: 'kode', headerName: 'Kode Dinas', width: 150
+      field: 'kode', headerName: 'Kode Dinas', width: 250
 
     },
     {
-      field: 'namaDinas', headerName: 'Nama Dinas', width: 450,
+      field: 'namaDinas', headerName: 'Nama Dinas', width: 350,
     },
     {
-      field: 'singkatan', headerName: 'Singkatan Dinas', width: 300,
+      field: 'singkatan', headerName: 'Singkatan Dinas', width:300,
     },
     {
       field: 'Aksi',
@@ -164,8 +164,8 @@ export default function ListDinas({value}) {
             <div className="heading">
               <h3>Kategori Dinas</h3>
               <div className="action">
-                <Button className="button-mpp" variant="contained">
-                  <Link href="/master-dinas/tambah-dinas">Tambah</Link>
+                <Button className="button-mpp" variant="contained"   onClick={() => Router.push(`/master-dinas/tambah-dinas/`)}>
+                 Tambah
                 </Button>
                 <Paper
                   component="form"
