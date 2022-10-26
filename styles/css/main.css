@@ -114,9 +114,18 @@ button {
 .table-mpp {
   border: 1px solid #E8E8E8 !important;
   border-radius: 8px 8px 0px 0px !important; }
+  .table-mpp .table-head-mpp {
+    background: #F1F1F1;
+    border-radius: 4px 4px 0px 0px; }
   .table-mpp .action {
     display: flex;
     gap: 20px; }
+    .table-mpp .action .button-outline-mpp {
+      border: 1px solid #145D9C;
+      border-radius: 4px;
+      padding: 10px 10px; }
+      .table-mpp .action .button-outline-mpp a {
+        color: #145D9C; }
     .table-mpp .action svg {
       color: #8A92A6; }
 
@@ -149,6 +158,13 @@ button {
   font-size: 14px !important;
   line-height: 180% !important;
   text-transform: capitalize !important; }
+
+.heading-dialog {
+  display: flex;
+  justify-content: space-between;
+  align-items: center; }
+  .heading-dialog svg {
+    color: #000; }
 
 .MuiDataGrid-footerContainer {
   justify-content: flex-start !important;

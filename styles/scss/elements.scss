@@ -165,9 +165,24 @@ button {
     border: 1px solid #E8E8E8 !important;
     border-radius: 8px 8px 0px 0px !important;
 
+    .table-head-mpp {
+        background: #F1F1F1;
+        border-radius: 4px 4px 0px 0px;
+
+    }
+
     .action {
         display: flex;
         gap: 20px;
+
+        .button-outline-mpp {
+            border: 1px solid #145D9C;
+            border-radius: 4px;
+            padding:10px 10px;
+            a {
+                color: $primary-color;
+            }
+        }
 
         svg {
             color: #8A92A6;
@@ -218,12 +233,23 @@ button {
     text-transform: capitalize !important;
 }
 
+.heading-dialog{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    svg{
+        color:#000;
+    }
+}
+
 .MuiDataGrid-footerContainer {
     justify-content: flex-start !important;
-    padding:20px 0;
-    button{
+    padding: 20px 0;
+
+    button {
         margin: 0 5px;
     }
+
     .Mui-selected {
         border-radius: 5px;
     }

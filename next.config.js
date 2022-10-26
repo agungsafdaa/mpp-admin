@@ -1,6 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
   swcMinify: true,
   env: {
     // DB_API: 'http://10.110.10.101:5501/service/',

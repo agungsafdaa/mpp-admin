@@ -2,11 +2,9 @@
 import React, { useState, useEffect } from 'react'
 import Card from '@mui/material/Card';
 import Head from 'next/head';
-import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Link from 'next/link';
-import { isAuthenticated } from '../../auth';
 import InputBase from '@mui/material/InputBase';
 import IconButton from '@mui/material/IconButton'
 import Paper from '@mui/material/Paper';
@@ -50,15 +48,10 @@ function CustomPagination() {
   );
 }
 export default function ListDinas({value}) {
-  const authenticated = isAuthenticated()
   const MySwal = withReactContent(Swal)
-  const router = useRouter()
-  const [page, setPage] = useState(1);
   const [open, setOpen] = useState(false);
   const [progress, setProgress] = useState(false);
-  const [loading, setLoading] = useState(true)
   const [dinas, setDinas] = useState([])
- 
 
   let nomor = 0;
 
