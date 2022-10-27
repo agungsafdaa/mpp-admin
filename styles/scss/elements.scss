@@ -19,6 +19,14 @@ a {
     }
 }
 
+.text-green{
+    color: #31B057;
+}
+
+.text-red{
+    color: #FF4141;
+}
+
 .container-mpp {
     padding: 24px !important;
 }
@@ -192,6 +200,31 @@ button {
 
 .shadow-none {
     box-shadow: none !important;
+}
+
+.action {
+    display: flex;
+    gap: 20px;
+
+    .button-outline-mpp {
+        border: 1px solid #145D9C;
+        border-radius: 4px;
+        padding:10px 10px;
+        a {
+            color: $primary-color;
+        }
+    }
+
+    svg {
+        color: #8A92A6;
+    }
+}
+
+.table-expand{
+    background: #FAFCFF;
+    .row-inactive{
+        background: #FFECEC;
+    }
 }
 
 .card-action {

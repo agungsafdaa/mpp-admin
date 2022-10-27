@@ -24,7 +24,7 @@ import Skeleton from '@mui/material/Skeleton';
 import axios from 'axios';
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
-import { useRouter } from 'next/router'
+import { Typography } from '@mui/material';
 import {
   DataGrid,
   gridPageCountSelector,
@@ -99,17 +99,28 @@ export default function ListDinas({ value }) {
   const columns = [
 
     {
-      field: 'kode', headerName: 'Kode Dinas', width: 250
+      field: 'kode', headerName: 'Kode Dinas', width: 200
 
     },
     {
-      field: 'namaDinas', headerName: 'Nama Dinas', width: 350,
+      field: 'namaDinas', headerName: 'Nama Dinas', width: 300,
     },
     {
-      field: 'singkatan', headerName: 'Singkatan Dinas', width: 300,
+      field: 'singkatan', headerName: 'Singkatan Dinas', width: 200,
     },
     {
-      field: 'isActive', headerName: 'Status', width: 300,
+      field: 'isActive', headerName: 'Status', width: 200,
+      renderCell: (params) => {
+        console.log(params.row.isActive)
+        return (
+          <div className="action">
+            <Typography className={params.row.isActive === true ? 'text-green' : 'text-red'}>
+            {params.row.isActive === true ? 'Active' : 'Inactive'}
+            </Typography>
+          </div>
+
+        )
+      }
      
     },
     {

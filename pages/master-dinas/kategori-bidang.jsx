@@ -204,29 +204,26 @@ export default function KategoriBidang() {
                             <IconButton
                               aria-label="expand row"
                               size="small"
-                              onClick={() => handleClickOpen(row)}
+                              // onClick={() => handleClickOpen(row)}
+                              // onClick={() => setOpen(!open)}
+                              onClick={() =>
+                                setOpen((prev) => ({ ...prev, [row._id]: !prev[row._id] }))
+                              }
                             >
-                              {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+                             {open[row._id]  ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
                             </IconButton>
                           </TableCell>
                           <TableCell >{row.namaBidang}</TableCell>
 
                           <TableCell>
                             <div className="action">
-                              <button underline="hover"
-                                color="inherit"
-                                className="button-outline-mpp"
-                                onClick={() => Router.push(`/master-dinas/tambah-seksi/?namaBidang=${row.namaBidang}&idDinas=${router.query.idDinas}`, undefined, { shallow: true })}  >
-                                <a>
-                                  Tambah Seksi
-                                </a>
-                              </button>
+
                               <button>
                                 <a onClick={() => Router.push({
                                   pathname: "/master-dinas/edit-bidang/",
                                   query: {
-                                    dataBidang:JSON.stringify(row), 
-                                    idDinas:router.query.idDinas
+                                    dataBidang: JSON.stringify(row),
+                                    idDinas: router.query.idDinas
                                   },
                                 })}>
                                   <EditIcon />
@@ -239,20 +236,34 @@ export default function KategoriBidang() {
                             </div>
                           </TableCell>
                         </TableRow>
-                        <TableRow>
+                        <TableRow className="table-expand">
                           <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
-                            <Collapse in={open} timeout="auto" unmountOnExit>
+                            <Collapse in={open[row._id]} timeout="auto" unmountOnExit  >
+                            {open[row._id] && (
                               <Box sx={{ margin: 1 }}>
-                                <Typography variant="h6" gutterBottom component="div">
-                                  History
+                                <Typography sx={{ color: 'rgba(70, 78, 95, 0.7);',fontSize:'14px;' }} gutterBottom >
+                                  Jumlah Seksi
                                 </Typography>
-                                <Table size="small" aria-label="purchases">
+                                <Typography sx={{fontSize:'16px'}} gutterBottom component="div">
+                                  {row.Seksi.length} Seksi
+                                </Typography>
+                                <div className="action">
+                                  <button underline="hover"
+                                    color="inherit"
+                                    className="button-outline-mpp"
+                                    onClick={() => Router.push(`/master-dinas/tambah-seksi/?namaBidang=${row.namaBidang}&idDinas=${router.query.idDinas}`, undefined, { shallow: true })}  >
+                                    <a>
+                                      Tambah Seksi
+                                    </a>
+                                  </button>
+                                </div>
+                                <Table className="table-mpp"  sx={{m:'20px 0'}} size="small" aria-label="purchases">
                                   <TableHead>
                                     <TableRow>
-                                      <TableCell>Date</TableCell>
-                                      <TableCell>Customer</TableCell>
-                                      <TableCell align="right">Amount</TableCell>
-                                      <TableCell align="right">Total price ($)</TableCell>
+                                      <TableCell>No</TableCell>
+                                      <TableCell>Nama Seksi</TableCell>
+                                      <TableCell>Status</TableCell>
+                                      <TableCell>Aksi</TableCell>
                                     </TableRow>
                                   </TableHead>
                                   <TableBody>
@@ -266,21 +277,48 @@ export default function KategoriBidang() {
                                         </TableCell>
 
                                       </TableRow>
-                                      : row.Seksi.map((row) => (
+                                      : row.Seksi.map((seksi) => (
 
                                         <TableRow
                                           key={row._id}
                                           sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                          className={seksi.isActive === false ? 'row-inactive' : ''}
                                         >
                                           <TableCell component="th" scope="row">
                                             {nomor++}
                                           </TableCell>
-                                          <TableCell >{row.namaSeksi}</TableCell>
+                                          <TableCell>{seksi.namaSeksi}</TableCell>
+                                          <TableCell>
+                                            <Typography className={seksi.isActive === true ? 'text-green' : 'text-red'}>
+                                              {seksi.isActive === true ? 'Active' : 'Inactive'}
+                                            </Typography>
+                                          </TableCell>
+                                          <TableCell>
+                                            <div className="action">
+                                              <button>
+                                                <a onClick={() => Router.push({
+                                                  pathname: "/master-dinas/edit-seksi/",
+                                                  query: {
+                                                    namaBidang:row.namaBidang,
+                                                    dataSeksi:JSON.stringify(seksi),
+                                                    idDinas: router.query.idDinas
+                                                  },
+                                                })}>
+                                                  <EditIcon />
+                                                </a></button>
+                                              <button>
+                                                <a>
+                                                  <DeleteIcon />
+                                                </a>
+                                              </button>
+                                            </div>
+                                          </TableCell>
                                         </TableRow>
                                       ))}
                                   </TableBody>
                                 </Table>
                               </Box>
+                            )}
                             </Collapse>
                           </TableCell>
                         </TableRow>
