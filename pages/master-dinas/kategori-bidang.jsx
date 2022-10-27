@@ -239,8 +239,8 @@ export default function KategoriBidang() {
                         <TableRow className="table-expand">
                           <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
                             <Collapse in={open[row._id]} timeout="auto" unmountOnExit  >
-                            {open[row._id] && (
-                              <Box sx={{ margin: 1 }}>
+                            {open[row._id] && 
+                              <Box sx={{ marginTop: 3,marginBottom:3}}>
                                 <Typography sx={{ color: 'rgba(70, 78, 95, 0.7);',fontSize:'14px;' }} gutterBottom >
                                   Jumlah Seksi
                                 </Typography>
@@ -318,7 +318,7 @@ export default function KategoriBidang() {
                                   </TableBody>
                                 </Table>
                               </Box>
-                            )}
+                            }
                             </Collapse>
                           </TableCell>
                         </TableRow>
