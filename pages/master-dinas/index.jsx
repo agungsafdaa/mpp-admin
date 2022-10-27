@@ -4,7 +4,7 @@ import Card from '@mui/material/Card';
 import Head from 'next/head';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
-import Link from 'next/link';
+import Box from '@mui/material/Box';
 import InputBase from '@mui/material/InputBase';
 import IconButton from '@mui/material/IconButton'
 import Paper from '@mui/material/Paper';
@@ -32,6 +32,9 @@ import {
   useGridApiContext,
   useGridSelector,
 } from '@mui/x-data-grid';
+import { darken, lighten } from '@mui/material/styles';
+
+
 function CustomPagination() {
   const apiRef = useGridApiContext();
   const page = useGridSelector(apiRef, gridPageSelector);
@@ -64,7 +67,7 @@ export default function ListDinas({ value }) {
     setOpen(false);
   };
 
- 
+
   const listDinas = async () => {
     setProgress(true)
 
@@ -115,13 +118,13 @@ export default function ListDinas({ value }) {
         return (
           <div className="action">
             <Typography className={params.row.isActive === true ? 'text-green' : 'text-red'}>
-            {params.row.isActive === true ? 'Active' : 'Inactive'}
+              {params.row.isActive === true ? 'Active' : 'Inactive'}
             </Typography>
           </div>
 
         )
       }
-     
+
     },
     {
       field: 'Aksi',
@@ -148,8 +151,6 @@ export default function ListDinas({ value }) {
       }
     }
   ];
-
-
 
 
   useEffect(() => {
@@ -217,21 +218,34 @@ export default function ListDinas({ value }) {
               </>
               :
               <>
-                <DataGrid
-                  getRowId={(dinas) => dinas._id}
-                  rows={dinas}
-                  columns={columns}
-                  rowHeight={100}
-                  autoHeight
-                  className="table-mpp"
-                  pagination
-                  disableColumnFilter={true}
-                  pageSize={10}
-                  rowsPerPageOptions={[8]}
-                  components={{
-                    Pagination: CustomPagination,
+                <Box
+                  sx={{
+                    height: 531,
+                    width: '100%',
+                    '& .row-false': {
+                      background:'#FFECEC',
+                    },
                   }}
-                />
+                >
+                  <DataGrid
+                    getRowId={(dinas) => dinas._id}
+                    rows={dinas}
+                    columns={columns}
+                    rowHeight={50}
+                    getRowClassName={(params) => `row-${params.row.isActive}`}
+                    // , params.row.isActive === false ? 'row-inactive' : ''
+                    className="table-mpp"
+                    pagination
+                    
+                    disableColumnFilter={true}
+                    pageSize={8}
+                    rowsPerPageOptions={[8]}
+                    components={{
+                      Pagination: CustomPagination,
+                    }}
+                  />
+                </Box>
+
               </>
             }
           </CardContent>
