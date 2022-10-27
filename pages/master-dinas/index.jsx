@@ -47,7 +47,7 @@ function CustomPagination() {
     />
   );
 }
-export default function ListDinas({value}) {
+export default function ListDinas({ value }) {
   const MySwal = withReactContent(Swal)
   const [open, setOpen] = useState(false);
   const [progress, setProgress] = useState(false);
@@ -64,6 +64,7 @@ export default function ListDinas({value}) {
     setOpen(false);
   };
 
+ 
   const listDinas = async () => {
     setProgress(true)
 
@@ -94,6 +95,7 @@ export default function ListDinas({value}) {
   }
 
 
+
   const columns = [
 
     {
@@ -104,7 +106,11 @@ export default function ListDinas({value}) {
       field: 'namaDinas', headerName: 'Nama Dinas', width: 350,
     },
     {
-      field: 'singkatan', headerName: 'Singkatan Dinas', width:300,
+      field: 'singkatan', headerName: 'Singkatan Dinas', width: 300,
+    },
+    {
+      field: 'isActive', headerName: 'Status', width: 300,
+     
     },
     {
       field: 'Aksi',
@@ -118,11 +124,12 @@ export default function ListDinas({value}) {
               onClick={() => Router.push(`/master-dinas/kategori-bidang/?namaDinas=${params.row.namaDinas}&idDinas=${params.row._id}`, undefined, { shallow: true })}  >
               <LoginIcon />
             </a>
-            <Link href="/">
-              <a>
-                <EditIcon />
-              </a>
-            </Link>
+            <a onClick={() => Router.push({
+              pathname: "/master-dinas/edit-dinas/",
+              query: params.row,
+            })}>
+              <EditIcon />
+            </a>
             <a onClick={handleClickOpen}><DeleteIcon /></a>
           </div>
 
@@ -132,7 +139,7 @@ export default function ListDinas({value}) {
   ];
 
 
-  
+
 
   useEffect(() => {
     listDinas()
@@ -157,8 +164,8 @@ export default function ListDinas({value}) {
             <div className="heading">
               <h3>Kategori Dinas</h3>
               <div className="action">
-                <Button className="button-mpp" variant="contained"   onClick={() => Router.push(`/master-dinas/tambah-dinas/`)}>
-                 Tambah
+                <Button className="button-mpp" variant="contained" onClick={() => Router.push(`/master-dinas/tambah-dinas/`)}>
+                  Tambah
                 </Button>
                 <Paper
                   component="form"

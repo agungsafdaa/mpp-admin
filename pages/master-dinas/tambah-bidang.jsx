@@ -35,8 +35,6 @@ export default function Tambah() {
     }
 
     const tambahData = async () => {
-
-
         setProgress(true)
 
         try {

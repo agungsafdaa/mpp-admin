@@ -129,6 +129,7 @@ const Layout = ({ children }) => {
     </div>
   );
 
+
   return (
     <>
       {authenticated === false ?
@@ -242,10 +243,9 @@ const Layout = ({ children }) => {
             <BreadcrumbsMobile />
 
             {children.props.statusCode === undefined ?
-              <div value={authenticated}>
-                {children}
-              </div>
-
+             
+                children
+           
               : <Custom404 />}
 
           </Box>
