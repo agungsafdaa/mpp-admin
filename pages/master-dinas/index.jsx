@@ -144,7 +144,7 @@ export default function ListDinas({ value }) {
             })}>
               <EditIcon />
             </a>
-            <a onClick={handleClickOpen}><DeleteIcon /></a>
+            {/* <a onClick={handleClickOpen}><DeleteIcon /></a> */}
           </div>
 
         )
