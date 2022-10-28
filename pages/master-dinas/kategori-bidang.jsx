@@ -47,6 +47,7 @@ export default function KategoriBidang() {
   const [bidang, setBidang] = useState([])
   const [open, setOpen] = useState(false);
   const idDinas = router.query.idDinas
+  const namaDinas = router.query.namaDinas
   let nomor = 1;
 
 
@@ -104,12 +105,12 @@ export default function KategoriBidang() {
         <Card className="card-mpp kategori-dinas">
           <CardContent>
             <div className="heading">
-              <h3>Kategori Bidang {params.namaDinas}</h3>
+              <h3>Kategori Bidang {namaDinas}</h3>
               <div className="action">
                 <Button className="button-mpp" variant="contained">
                   <Button underline="hover"
                     color="inherit"
-                    onClick={() => Router.push(`/master-dinas/tambah-bidang/?namaDinas=${params.namaDinas}&idDinas=${params.idDinas}`, undefined, { shallow: true })}  >
+                    onClick={() => Router.push(`/master-dinas/tambah-bidang/?namaDinas=${namaDinas}&idDinas=${idDinas}`, undefined, { shallow: true })}  >
                     Tambah
                   </Button>
                 </Button>
@@ -117,58 +118,7 @@ export default function KategoriBidang() {
 
               </div>
             </div>
-            {/* <Dialog open={open} onClose={handleClose}>
-              <DialogTitle>
-                <div className="heading-dialog">
-                  List Seksi {seksi.namaBidang}
-                  <Button onClick={handleClose}><CloseIcon /></Button>
-                </div>
-
-              </DialogTitle>
-              <DialogContent>
-                <TableContainer component={Paper} className="table-mpp shadow-none">
-                  <Table sx={{ minWidth: 500 }} aria-label="simple table" className=" ">
-                    <TableHead className="table-head-mpp">
-                      <TableRow>
-                        <TableCell>No</TableCell>
-                        <TableCell >Nama Seksi</TableCell>
-
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      {seksi.length === 0 ?
-                        <TableRow
-
-                          sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                        >
-                          <TableCell component="th" scope="row">
-                            Tidak ada seksi
-                          </TableCell>
-
-                        </TableRow>
-                        : seksi.Seksi.map((row) => (
-
-                          <TableRow
-                            key={row._id}
-                            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                          >
-                            <TableCell component="th" scope="row">
-                              {nomor++}
-                            </TableCell>
-                            <TableCell >{row.namaSeksi}</TableCell>
-                          </TableRow>
-                        ))}
-                    </TableBody>
-                  </Table>
-                </TableContainer>
-
-              </DialogContent>
-              <DialogActions>
-
-
-              </DialogActions>
-            </Dialog> */}
-
+            
 
             <TableContainer component={Paper} className="table-mpp shadow-none">
               <Table sx={{ minWidth: 650 }} aria-label="collapsible table">
@@ -204,8 +154,6 @@ export default function KategoriBidang() {
                             <IconButton
                               aria-label="expand row"
                               size="small"
-                              // onClick={() => handleClickOpen(row)}
-                              // onClick={() => setOpen(!open)}
                               onClick={() =>
                                 setOpen((prev) => ({ ...prev, [row._id]: !prev[row._id] }))
                               }
@@ -300,8 +248,9 @@ export default function KategoriBidang() {
                                                   pathname: "/master-dinas/edit-seksi/",
                                                   query: {
                                                     namaBidang:row.namaBidang,
-                                                    dataSeksi:JSON.stringify(seksi),
-                                                    idDinas: router.query.idDinas
+                                                    namaSeksi:seksi.namaSeksi,
+                                                    idDinas: router.query.idDinas,
+                                                    statusSeksi:seksi.isActive
                                                   },
                                                 })}>
                                                   <EditIcon />

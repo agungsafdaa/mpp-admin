@@ -1,13 +1,13 @@
-import React, { useState } from 'react'
-import Card from '@mui/material/Card';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useState, useEffect } from 'react'
 import Head from 'next/head';
-import CardActions from '@mui/material/CardActions';
+import Card from '@mui/material/Card';
+
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Link from 'next/link';
 import Typography from '@mui/material/Typography'
-import InputBase from '@mui/material/InputBase';
-import IconButton from '@mui/material/IconButton'
+import PropTypes from 'prop-types';
 import Paper from '@mui/material/Paper';
 import SearchIcon from '@mui/icons-material/Search';
 import Table from '@mui/material/Table';
@@ -16,42 +16,65 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import Pagination from '@mui/material/Pagination';
-import LoginIcon from '@mui/icons-material/Login';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
-import Dialog from '@mui/material/Dialog';
-import DialogTitle from '@mui/material/DialogTitle';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogActions from '@mui/material/DialogActions';
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
-
-const rows = [
-  createData('Bidang Penyelenggaraan Pelayanan Perizinan dan Non Perizinan Pembangunan dan Lingkungan', '3'),
-  createData('Bidang Penyelenggaraan Pelayanan Perizinan dan Non Perizinan Perekonomian dan Kesra', '3'),
-  createData('Bidang Penyelenggaraan Pelayanan Perizinan dan Non Perizinan Pembangunan dan Lingkungan',  '3'),
-  createData('Bidang Penyelenggaraan Pelayanan Perizinan dan Non Perizinan Perekonomian dan Kesra', '3'),
-];
-export default function ListDinas({ name }) {
-  const [page, setPage] = useState(1);
+import { useRouter } from 'next/router'
+import Router from "next/router"
+import Cookies from 'js-cookie'
+import axios from 'axios';
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
+import Box from '@mui/material/Box';
+import Collapse from '@mui/material/Collapse';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import IconButton from '@mui/material/IconButton';
+export default function KategoriBidang() {
+  const router = useRouter()
+  const MySwal = withReactContent(Swal)
+ 
+  const [progress, setProgress] = useState(false);
+  const [bidang, setBidang] = useState([])
   const [open, setOpen] = useState(false);
-
+  const idDinas = router.query.idDinas
   let nomor = 1;
-  const handleChange = (event, value) => {
-    setPage(value);
-  };
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
 
 
-  const handleClose = () => {
-    setOpen(false);
-  };
+
+
+  useEffect(() => {
+  
+    const listBidang = async () => {
+      setProgress(true)
+
+      try {
+        let url = `${process.env.DB_API}ptsp/list-bidang/`
+        const response = await axios.get(url, {
+          headers: {
+            Authorization: Cookies.get('token')
+          }
+        });
+
+        if (response.status === 200) {
+          setProgress(false)
+          setBidang(response.data.data)
+
+        }
+
+      } catch (error) {
+
+        MySwal.fire({
+          title: "Error!",
+          text: error.response.data.message,
+          icon: "error",
+          button: "batal",
+        });
+        setProgress(true)
+      }
+    }
+    listBidang()
+  }, []);
+
 
   return (
     <>
@@ -64,103 +87,183 @@ export default function ListDinas({ name }) {
         <Card className="card-mpp kategori-dinas">
           <CardContent>
             <div className="heading">
-              <h3>Master Bidang/Seksi PTSP</h3>
+              <h3>Kategori Bidang/Seksi PTSP</h3>
               <div className="action">
                 <Button className="button-mpp" variant="contained">
-                  <Link href="/master-bidang-ptsp/tambah-bidang">Tambah</Link>
+                  <Button underline="hover"
+                    color="inherit"
+                    onClick={() => Router.push(`/master-bidang-ptsp/tambah-bidang`, undefined, { shallow: true })}  >
+                    Tambah
+                  </Button>
                 </Button>
-                <Paper
-                  component="form"
-                  className="shadow-none form-mpp"
-                  sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 400 }}
-                >
-                  <InputBase
-                    sx={{ ml: 1, flex: 1 }}
-                    placeholder="Search "
-                    inputProps={{ 'aria-label': 'search ' }}
-                  />
-                  <IconButton type="button" aria-label="search">
-                    <SearchIcon />
-                  </IconButton>
-                </Paper>
+
 
               </div>
             </div>
-            <Dialog open={open} onClose={handleClose}>
-              <DialogTitle>Hapus Surat Permohonan</DialogTitle>
-              <DialogContent>
-                <DialogContentText>
-                  Apakah anda yakin akan menghapus surat permohonan Izin Praktik Tenaga Ahli Gizi - Baru?
-                </DialogContentText>
-
-              </DialogContent>
-              <DialogActions>
-                <Button className="button-outline-mpp" onClick={handleClose} variant="outline">Cancel</Button>
-                <Button className="button-mpp" onClick={handleClose}>Hapus</Button>
-              </DialogActions>
-            </Dialog>
             <TableContainer component={Paper} className="table-mpp shadow-none">
-              <Table sx={{ minWidth: 650 }} aria-label="simple table" className=" ">
+              <Table sx={{ minWidth: 650 }} aria-label="collapsible table">
                 <TableHead>
                   <TableRow>
                     <TableCell>No</TableCell>
-                    <TableCell >Nama Persyaratan</TableCell>
-                    <TableCell >Jumlah Seksi</TableCell>
-                 
+                    <TableCell >Seksi</TableCell>
+                    <TableCell >Kategori Bidang Dinas</TableCell>
                     <TableCell >Aksi</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {rows.map((row) => (
+                  {bidang.length === 0 ?
                     <TableRow
-                      key={row.name}
+
                       sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                     >
 
-                      <TableCell component="th" scope="row">
-                        {nomor++}
-                      </TableCell>
-                      <TableCell >{row.name}</TableCell>
-                      <TableCell >{row.calories}</TableCell>
-                      <TableCell >{row.fat}</TableCell>
+                      <TableCell colSpan={4} sx={{ textAlign: 'center' }}>Tidak ada Data</TableCell>
 
-
-                      <TableCell>
-                        <div className="action">
-                          <button>
-                            <Link underline="hover"
-                              color="inherit"
-                              href="/master-dinas/kategori-bidang/" >
-                              <a>
-                                <h3><LoginIcon /></h3>
-                              </a>
-                            </Link>
-                          </button>
-                          <button>
-                            <Link href="/">
-                              <a>
-                                <EditIcon />
-                              </a>
-                            </Link>
-                          </button>
-                          <button onClick={handleClickOpen}><DeleteIcon /></button>
-                        </div>
-                      </TableCell>
                     </TableRow>
-                  ))}
+                    : bidang.map((row) => (
+
+                      <>
+                        <TableRow
+                          key={row._id}
+                          sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                        >
+                          <TableCell component="th" scope="row">
+                            {nomor++}
+                          </TableCell>
+                          <TableCell>
+                            <IconButton
+                              aria-label="expand row"
+                              size="small"
+                              onClick={() =>
+                                setOpen((prev) => ({ ...prev, [row._id]: !prev[row._id] }))
+                              }
+                            >
+                             {open[row._id]  ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+                            </IconButton>
+                          </TableCell>
+                          <TableCell >{row.namaBidang}</TableCell>
+
+                          <TableCell>
+                            <div className="action">
+
+                              <button>
+                                <a onClick={() => Router.push({
+                                  pathname: "/master-dinas/edit-bidang/",
+                                  query: {
+                                    dataBidang: JSON.stringify(row),
+                                    idDinas: router.query.idDinas
+                                  },
+                                })}>
+                                  <EditIcon />
+                                </a></button>
+                              <button>
+                                <a>
+                                  <DeleteIcon />
+                                </a>
+                              </button>
+                            </div>
+                          </TableCell>
+                        </TableRow>
+                        <TableRow className="table-expand">
+                          <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+                            <Collapse in={open[row._id]} timeout="auto" unmountOnExit  >
+                            {open[row._id] && 
+                              <Box sx={{ marginTop: 3,marginBottom:3}}>
+                                <Typography sx={{ color: 'rgba(70, 78, 95, 0.7);',fontSize:'14px;' }} gutterBottom >
+                                  Jumlah Seksi
+                                </Typography>
+                                <Typography sx={{fontSize:'16px'}} gutterBottom component="div">
+                                  {row.Seksi.length} Seksi
+                                </Typography>
+                                <div className="action">
+                                  <button underline="hover"
+                                    color="inherit"
+                                    className="button-outline-mpp"
+                                    onClick={() => Router.push(`/master-bidang-ptsp/tambah-seksi-ptsp/?namaBidang=${row.namaBidang}&idBidang=${row._id}`, undefined, { shallow: true })}  >
+                                    <a>
+                                      Tambah Seksi
+                                    </a>
+                                  </button>
+                                </div>
+                                <Table className="table-mpp"  sx={{m:'20px 0'}} size="small" aria-label="purchases">
+                                  <TableHead>
+                                    <TableRow>
+                                      <TableCell>No</TableCell>
+                                      <TableCell>Nama Seksi</TableCell>
+                                      <TableCell>Status</TableCell>
+                                      <TableCell>Aksi</TableCell>
+                                    </TableRow>
+                                  </TableHead>
+                                  <TableBody>
+                                    {row.Seksi.length === 0 ?
+                                      <TableRow
+
+                                        sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                      >
+                                        <TableCell component="th" scope="row">
+                                          Tidak ada seksi
+                                        </TableCell>
+
+                                      </TableRow>
+                                      : row.Seksi.map((seksi) => (
+
+                                        <TableRow
+                                          key={row._id}
+                                          sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                          className={seksi.isActive === false ? 'row-inactive' : ''}
+                                        >
+                                          <TableCell component="th" scope="row">
+                                            {nomor++}
+                                          </TableCell>
+                                          <TableCell>{seksi.namaSeksi}</TableCell>
+                                          <TableCell>
+                                            <Typography className={seksi.isActive === true ? 'text-green' : 'text-red'}>
+                                              {seksi.isActive === true ? 'Active' : 'Inactive'}
+                                            </Typography>
+                                          </TableCell>
+                                          <TableCell>
+                                            <div className="action">
+                                              <button>
+                                                <a onClick={() => Router.push({
+                                                  pathname: "/master-bidang-ptsp/edit-seksi/",
+                                                  query: {
+                                                    namaSeksi:seksi.namaSeksi,
+                                                    statusSeksi:seksi.isActive,
+                                                    idBidang: row._id
+                                                  },
+                                                })}>
+                                                  <EditIcon />
+                                                </a></button>
+                                              <button>
+                                                <a>
+                                                  <DeleteIcon />
+                                                </a>
+                                              </button>
+                                            </div>
+                                          </TableCell>
+                                        </TableRow>
+                                      ))}
+                                  </TableBody>
+                                </Table>
+                              </Box>
+                            }
+                            </Collapse>
+                          </TableCell>
+                        </TableRow>
+                      </>
+
+                    ))}
+
                 </TableBody>
               </Table>
             </TableContainer>
 
           </CardContent>
-          <CardActions>
-            <Pagination count={10} page={page} onChange={handleChange} />
-          </CardActions>
+
         </Card>
 
       </div>
     </>
-
   )
 }
 

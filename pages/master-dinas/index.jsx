@@ -114,7 +114,7 @@ export default function ListDinas({ value }) {
     {
       field: 'isActive', headerName: 'Status', width: 200,
       renderCell: (params) => {
-        console.log(params.row.isActive)
+        
         return (
           <div className="action">
             <Typography className={params.row.isActive === true ? 'text-green' : 'text-red'}>

@@ -38,10 +38,10 @@ export default function Tambah() {
         setProgress(true)
 
         try {
-            let url = `${process.env.DB_API}dinas/add-bidang/${router.query.idDinas}`
+            let url = `${process.env.DB_API}kecamatan-kelurahan/add-kecamatan`
 
-            const response = await axios.put(url, {
-                namaBidang: state.namaBidang
+            const response = await axios.post(url, {
+                namaKecamatan: state.namaKecamatan
             }, {
                 headers: {
                     Authorization: Cookies.get('token')
@@ -57,7 +57,7 @@ export default function Tambah() {
 
                 })
                 setTimeout(() => {
-                    Router.Back()
+                    Router.back()
                 }, 2000);
             }
 
@@ -79,7 +79,6 @@ export default function Tambah() {
 
     }
 
-  
     return (
         <>
             <Head>
@@ -94,41 +93,21 @@ export default function Tambah() {
                         <Card className="card-mpp kategori-dinas">
                             <CardContent>
                                 <div className="heading">
-                                    <h3>Tambah Kategori Bidang</h3>
-
+                                    <h3>Tambah Kecamatan & Kelurahan</h3>
                                 </div>
-
                                 <div className="form-input">
                                     <Typography>
-                                        <span className="required"> *</span> Nama Dinas
+                                        <span className="required"> *</span> Nama Kecamatan
                                     </Typography>
                                     <TextField
                                         fullWidth
-                                        name="kategori_dinas"
-                                        placeholder='nama dinas '
-                                        value={router.query.namaDinas}
-                                        disabled
+                                        name="namaKecamatan"
+                                        placeholder='Nama Kecamatan'
+
+                                        value={state.namaKecamatan  || ''}
                                         onChange={handleChange}
                                     />
                                 </div>
-                              
-
-                                <div className="form-input">
-                                    <Typography>
-                                        <span className="required"> *</span> Nama Bidang
-                                    </Typography>
-                                    <TextField
-                                        fullWidth
-                                        name="namaBidang"
-                                        placeholder='Nama Bidang'
-
-                                        value={state.namaBidang || ''}
-                                        onChange={handleChange}
-                                    />
-                                </div>
-
-                              
-
                             </CardContent>
 
                         </Card>

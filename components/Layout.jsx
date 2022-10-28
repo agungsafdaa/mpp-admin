@@ -46,6 +46,7 @@ const Layout = ({ children }) => {
     { label: 'Master Bidang/Seksi PTSP', path: '/master-bidang-ptsp' },
     { label: 'Kategori Izin', path: '/kategori-izin' },
     { label: 'Master Persyaratan', path: '/master-persyaratan' },
+    { label: 'Kecamatan & Kelurahan', path: '/kecamatan-kelurahan' },
   ]
 
   const handleDrawerToggle = () => {

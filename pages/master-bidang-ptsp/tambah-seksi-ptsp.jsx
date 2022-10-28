@@ -35,13 +35,15 @@ export default function Tambah() {
     }
 
     const tambahData = async () => {
+
+
         setProgress(true)
 
         try {
-            let url = `${process.env.DB_API}dinas/add-bidang/${router.query.idDinas}`
+            let url = `${process.env.DB_API}ptsp/add-seksi/${router.query.idBidang}`
 
             const response = await axios.put(url, {
-                namaBidang: state.namaBidang
+                namaSeksi : state.namaSeksi 
             }, {
                 headers: {
                     Authorization: Cookies.get('token')
@@ -57,7 +59,7 @@ export default function Tambah() {
 
                 })
                 setTimeout(() => {
-                    Router.Back()
+                    Router.back()
                 }, 2000);
             }
 
@@ -94,24 +96,9 @@ export default function Tambah() {
                         <Card className="card-mpp kategori-dinas">
                             <CardContent>
                                 <div className="heading">
-                                    <h3>Tambah Kategori Bidang</h3>
+                                    <h3>Tambah Seksi Bidang {router.query.namaBidang}</h3>
 
                                 </div>
-
-                                <div className="form-input">
-                                    <Typography>
-                                        <span className="required"> *</span> Nama Dinas
-                                    </Typography>
-                                    <TextField
-                                        fullWidth
-                                        name="kategori_dinas"
-                                        placeholder='nama dinas '
-                                        value={router.query.namaDinas}
-                                        disabled
-                                        onChange={handleChange}
-                                    />
-                                </div>
-                              
 
                                 <div className="form-input">
                                     <Typography>
@@ -120,9 +107,23 @@ export default function Tambah() {
                                     <TextField
                                         fullWidth
                                         name="namaBidang"
-                                        placeholder='Nama Bidang'
+                                        placeholder='nama bidang '
+                                        value={router.query.namaBidang}
+                                        disabled
+                                        onChange={handleChange}
+                                    />
+                                </div>
+                              
 
-                                        value={state.namaBidang || ''}
+                                <div className="form-input">
+                                    <Typography>
+                                        <span className="required"> *</span> Nama Seksi
+                                    </Typography>
+                                    <TextField
+                                        fullWidth
+                                        name="namaSeksi"
+                                        placeholder='Nama Seksi'
+                                        value={state.namaSeksi  || ''}
                                         onChange={handleChange}
                                     />
                                 </div>

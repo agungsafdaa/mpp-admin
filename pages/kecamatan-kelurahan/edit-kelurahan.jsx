@@ -22,22 +22,23 @@ import FormLabel from '@mui/material/FormLabel';
 
 export default function Tambah() {
     const router = useRouter()
-    const namaBidang = router.query.namaBidang
-    const namaSeksi = router.query.namaSeksi
-    const statusSeksi = router.query.statusSeksi
-    const idDinas = router.query.idDinas
+    const namaKecamatan = router.query.namaKecamatan
+    const namaKelurahan = router.query.namaKelurahan
+    const statusKelurahan = router.query.statusKelurahan
+    const idKecamatan = router.query.idKecamatan
+    const authenticated = isAuthenticated()
     const MySwal = withReactContent(Swal)
     const [state, setState] = useState({});
     const [progress, setProgress] = useState(false)
-    const [value, setValue] = useState(statusSeksi);
+    const [loading, setLoading] = useState(true)
+    const [value, setValue] = useState(statusKelurahan);
     const setAktif = async(event) => {
         setProgress(true)
         setValue(event.target.value)
         try {
-            let url = `${process.env.DB_API}dinas/status-seksi/${idDinas}`
+            let url = `${process.env.DB_API}kecamatan-kelurahan/status-kelurahan/${idKecamatan}`
             const response = await axios.put(url, {
-                namaBidang:namaBidang,
-                namaSeksi:namaSeksi,
+                namaKelurahan:namaKelurahan,
                 status :event.target.value,
             }, {
                 headers: {
@@ -78,13 +79,10 @@ export default function Tambah() {
     const tambahData = async () => {
         setProgress(true)
         try {
-            let url = `${process.env.DB_API}dinas/edit-seksi/${idDinas}`
-
+            let url = `${process.env.DB_API}kecamatan-kelurahan/edit-kelurahan/${idKecamatan}`
             const response = await axios.put(url, {
-                namaBidang:namaBidang,
-                namaSeksi: namaSeksi,
-                namaSeksiEdit :state.namaSeksiEdit  === undefined ? namaSeksi : state.namaSeksiEdit ,
-
+                namaKecamanamaKelurahantan : namaKelurahan,
+                namaKelurahanEdit :state.namaKelurahanEdit === undefined ? namaKelurahan : state.namaKelurahanEdit,
             }, {
                 headers: {
                     Authorization: Cookies.get('token')
@@ -117,7 +115,8 @@ export default function Tambah() {
         }
     }
 
-   
+
+
     return (
         <>
             <Head>
@@ -133,7 +132,7 @@ export default function Tambah() {
                                 <CardContent>
 
                                     <div className="heading">
-                                        <h3>Edit {namaSeksi}</h3>
+                                        <h3>Edit {namaKecamatan}</h3>
 
                                     </div>
                                     <div className="form-input">
@@ -156,12 +155,12 @@ export default function Tambah() {
 
                                     <div className="form-input">
                                         <Typography>
-                                            <span className="required"> *</span> nama Seksi
+                                            <span className="required"> *</span> nama Bidang
                                         </Typography>
                                         <TextField
-                                            name="namaSeksiEdit"
-                                            placeholder={namaSeksi}
-                                            value={state.namaSeksiEdit  || ''}
+                                            name="namaKelurahanEdit"
+                                            placeholder={namaKecamatan}
+                                            value={state.namaKelurahanEdit || ''}
                                             onChange={handleChange}
                                             required
                                         />
@@ -174,7 +173,7 @@ export default function Tambah() {
                         <Card className="card-action">
                             <CardContent>
                                 <div className="action">
-                                    <Button variant="outlined" className="button-outline-mpp" onClick={() => Router.push('/master-dinas')}>batal</Button>
+                                    <Button variant="outlined" className="button-outline-mpp" onClick={() => Router.back()}>batal</Button>
                                     <Button variant="contained" type="submit" className="button-mpp">Simpan</Button>
                                 </div>
                             </CardContent>
