@@ -101,10 +101,7 @@ export default function Tambah() {
                     Router.back()
                 }, 2000);
             }
-
-
         } catch (error) {
-
             MySwal.fire({
                 title: "Error!",
                 text: error.response.data.error,
@@ -116,12 +113,11 @@ export default function Tambah() {
     }
 
 
-
     return (
         <>
             <Head>
                 <title>MPP Admin</title>
-                <meta name="description" content="DLHK Kota Palembang" />
+                <meta name="description" content="MPP Admin" />
                 <link rel="icon" href="../img/logo.png" />
             </Head>
             {progress === true ? <LoadingBar open={progress} /> :
@@ -165,8 +161,6 @@ export default function Tambah() {
                                             required
                                         />
                                     </div>
-
-                               
                                 </CardContent>
                             </Card>
                         </div>

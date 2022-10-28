@@ -167,7 +167,7 @@ export default function ListDinas({ value }) {
     <>
       <Head>
         <title>MPP Admin</title>
-        <meta name="description" content="DLHK Kota Palembang" />
+        <meta name="description" content="MPP Admin" />
         <link rel="icon" href="../img/logo.png" />
       </Head>
       <div className="container-mpp">
