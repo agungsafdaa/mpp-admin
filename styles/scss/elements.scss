@@ -116,13 +116,7 @@ button {
         }
     }
 
-    button {
-        width: 700px;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-
-    }
+  
 }
 
 
@@ -197,6 +191,17 @@ button {
 
         svg {
             color: #8A92A6;
+        }
+    }
+
+    .css-1ptx2yq-MuiInputBase-root-MuiInput-root {
+        border: 1px solid #E8E8E8;
+        padding: 8px 10px;
+        width:399px;
+        border-radius:3px;
+        @include lt-md{
+            width:100%;
+            margin:10px 0;
         }
     }
 }

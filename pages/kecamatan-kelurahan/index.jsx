@@ -165,148 +165,145 @@ export default function KategoriBidang() {
                                                     .toLowerCase()
                                                     .includes(searchedVal.toString().toLowerCase())
                                             ).map((row) => (
-                                                row ?
-                                                    <>
-                                                        <TableRow
-                                                            key={row._id}
-                                                            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                                                            className={row.isActive === false ? 'row-inactive' : ''}
-                                                        >
-                                                            <TableCell component="th" scope="row">
-                                                                {nomor++}
-                                                            </TableCell>
 
-                                                            <TableCell>
-                                                                <IconButton
-                                                                    aria-label="expand row"
-                                                                    size="small"
-                                                                    onClick={() =>
-                                                                        setOpen((prev) => ({ ...prev, [row._id]: !prev[row._id] }))
-                                                                    }
-                                                                >
-                                                                    {open[row._id] ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-                                                                </IconButton>
-                                                            </TableCell>
-                                                            <TableCell >{row.namaKecamatan}</TableCell>
-                                                            <TableCell>
-                                                                <Typography className={row.isActive === true ? 'text-green' : 'text-red'}>
-                                                                    {row.isActive === true ? 'Active' : 'Inactive'}
-                                                                </Typography>
-                                                            </TableCell>
-                                                            <TableCell>
-                                                                <div className="action">
+                                                <>
+                                                    <TableRow
+                                                        key={row._id}
+                                                        sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                                        className={row.isActive === false ? 'row-inactive' : ''}
+                                                    >
+                                                        <TableCell component="th" scope="row">
+                                                            {nomor++}
+                                                        </TableCell>
 
-                                                                    <button>
-                                                                        <a onClick={() => Router.push({
-                                                                            pathname: "/kecamatan-kelurahan/edit-kecamatan/",
-                                                                            query: {
-                                                                                namaKecamatan: row.namaKecamatan,
-                                                                                statusKecamatan: row.isActive,
-                                                                                idKecamatan: row._id
-                                                                            },
-                                                                        })}>
-                                                                            <EditIcon />
-                                                                        </a></button>
-                                                                    <button>
-                                                                        <a>
-                                                                            <DeleteIcon />
-                                                                        </a>
-                                                                    </button>
-                                                                </div>
-                                                            </TableCell>
-                                                        </TableRow>
-                                                        <TableRow className="table-expand" key={row.namaKecamatan}>
-                                                            <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
-                                                                <Collapse in={open[row._id]} timeout="auto" unmountOnExit  >
-                                                                    {open[row._id] &&
-                                                                        <Box sx={{ marginTop: 3, marginBottom: 3 }}>
-                                                                            <Typography sx={{ color: 'rgba(70, 78, 95, 0.7);', fontSize: '14px;' }} gutterBottom >
-                                                                                Jumlah Kelurahan
-                                                                            </Typography>
-                                                                            <Typography sx={{ fontSize: '16px' }} gutterBottom component="div">
-                                                                                {row.Kelurahan.length} Kelurahan
-                                                                            </Typography>
-                                                                            <div className="action">
-                                                                                <button underline="hover"
-                                                                                    color="inherit"
-                                                                                    className="button-outline-mpp"
-                                                                                    onClick={() => Router.push(`/kecamatan-kelurahan/tambah-kelurahan/?namaKecamatan=${row.namaKecamatan}&idKecamatan=${row._id}`, undefined, { shallow: true })}  >
-                                                                                    <a>
-                                                                                        Tambah Kelurahan
-                                                                                    </a>
-                                                                                </button>
-                                                                            </div>
-                                                                            <Table className="table-mpp" sx={{ m: '20px 0' }} size="small" aria-label="purchases">
-                                                                                <TableHead>
-                                                                                    <TableRow>
-                                                                                        <TableCell>No</TableCell>
-                                                                                        <TableCell>Nama Seksi</TableCell>
-                                                                                        <TableCell>Status</TableCell>
-                                                                                        <TableCell>Aksi</TableCell>
+                                                        <TableCell>
+                                                            <IconButton
+                                                                aria-label="expand row"
+                                                                size="small"
+                                                                onClick={() =>
+                                                                    setOpen((prev) => ({ ...prev, [row._id]: !prev[row._id] }))
+                                                                }
+                                                            >
+                                                                {open[row._id] ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+                                                            </IconButton>
+                                                        </TableCell>
+                                                        <TableCell >{row.namaKecamatan}</TableCell>
+                                                        <TableCell>
+                                                            <Typography className={row.isActive === true ? 'text-green' : 'text-red'}>
+                                                                {row.isActive === true ? 'Active' : 'Inactive'}
+                                                            </Typography>
+                                                        </TableCell>
+                                                        <TableCell>
+                                                            <div className="action">
+
+                                                                <button>
+                                                                    <a onClick={() => Router.push({
+                                                                        pathname: "/kecamatan-kelurahan/edit-kecamatan/",
+                                                                        query: {
+                                                                            namaKecamatan: row.namaKecamatan,
+                                                                            statusKecamatan: row.isActive,
+                                                                            idKecamatan: row._id
+                                                                        },
+                                                                    })}>
+                                                                        <EditIcon />
+                                                                    </a></button>
+                                                                <button>
+                                                                    <a>
+                                                                        <DeleteIcon />
+                                                                    </a>
+                                                                </button>
+                                                            </div>
+                                                        </TableCell>
+                                                    </TableRow>
+                                                    <TableRow className="table-expand" key={row.namaKecamatan}>
+                                                        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+                                                            <Collapse in={open[row._id]} timeout="auto" unmountOnExit  >
+                                                                {open[row._id] &&
+                                                                    <Box sx={{ marginTop: 3, marginBottom: 3 }}>
+                                                                        <Typography sx={{ color: 'rgba(70, 78, 95, 0.7);', fontSize: '14px;' }} gutterBottom >
+                                                                            Jumlah Kelurahan
+                                                                        </Typography>
+                                                                        <Typography sx={{ fontSize: '16px' }} gutterBottom component="div">
+                                                                            {row.Kelurahan.length} Kelurahan
+                                                                        </Typography>
+                                                                        <div className="action">
+                                                                            <button underline="hover"
+                                                                                color="inherit"
+                                                                                className="button-outline-mpp"
+                                                                                onClick={() => Router.push(`/kecamatan-kelurahan/tambah-kelurahan/?namaKecamatan=${row.namaKecamatan}&idKecamatan=${row._id}`, undefined, { shallow: true })}  >
+                                                                                <a>
+                                                                                    Tambah Kelurahan
+                                                                                </a>
+                                                                            </button>
+                                                                        </div>
+                                                                        <Table className="table-mpp" sx={{ m: '20px 0' }} size="small" aria-label="purchases">
+                                                                            <TableHead>
+                                                                                <TableRow>
+                                                                                    <TableCell>No</TableCell>
+                                                                                    <TableCell>Nama Seksi</TableCell>
+                                                                                    <TableCell>Status</TableCell>
+                                                                                    <TableCell>Aksi</TableCell>
+                                                                                </TableRow>
+                                                                            </TableHead>
+                                                                            <TableBody>
+                                                                                {row.Kelurahan.length === 0 ?
+                                                                                    <TableRow
+
+                                                                                        sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                                                                    >
+                                                                                        <TableCell component="th" scope="row">
+                                                                                            Tidak ada seksi
+                                                                                        </TableCell>
+
                                                                                     </TableRow>
-                                                                                </TableHead>
-                                                                                <TableBody>
-                                                                                    {row.Kelurahan.length === 0 ?
-                                                                                        <TableRow
+                                                                                    : row.Kelurahan.map((kelurahan) => (
 
+                                                                                        <TableRow
+                                                                                            key={row._id}
                                                                                             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                                                                            className={kelurahan.isActive === false ? 'row-inactive' : ''}
                                                                                         >
                                                                                             <TableCell component="th" scope="row">
-                                                                                                Tidak ada seksi
+                                                                                                {nomor++}
                                                                                             </TableCell>
-
+                                                                                            <TableCell>{kelurahan.namaKelurahan}</TableCell>
+                                                                                            <TableCell>
+                                                                                                <Typography className={kelurahan.isActive === true ? 'text-green' : 'text-red'}>
+                                                                                                    {kelurahan.isActive === true ? 'Active' : 'Inactive'}
+                                                                                                </Typography>
+                                                                                            </TableCell>
+                                                                                            <TableCell>
+                                                                                                <div className="action">
+                                                                                                    <button>
+                                                                                                        <a onClick={() => Router.push({
+                                                                                                            pathname: "/kecamatan-kelurahan/edit-kelurahan/",
+                                                                                                            query: {
+                                                                                                                namaKecamatan: row.namaKecamatan,
+                                                                                                                namaKelurahan: kelurahan.namaKelurahan,
+                                                                                                                statusKelurahan: kelurahan.isActive,
+                                                                                                                idKecamatan: row._id
+                                                                                                            },
+                                                                                                        })}>
+                                                                                                            <EditIcon />
+                                                                                                        </a></button>
+                                                                                                    <button>
+                                                                                                        <a>
+                                                                                                            <DeleteIcon />
+                                                                                                        </a>
+                                                                                                    </button>
+                                                                                                </div>
+                                                                                            </TableCell>
                                                                                         </TableRow>
-                                                                                        : row.Kelurahan.map((kelurahan) => (
+                                                                                    ))}
+                                                                            </TableBody>
+                                                                        </Table>
+                                                                    </Box>
+                                                                }
+                                                            </Collapse>
+                                                        </TableCell>
+                                                    </TableRow>
+                                                </>
 
-                                                                                            <TableRow
-                                                                                                key={row._id}
-                                                                                                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                                                                                                className={kelurahan.isActive === false ? 'row-inactive' : ''}
-                                                                                            >
-                                                                                                <TableCell component="th" scope="row">
-                                                                                                    {nomor++}
-                                                                                                </TableCell>
-                                                                                                <TableCell>{kelurahan.namaKelurahan}</TableCell>
-                                                                                                <TableCell>
-                                                                                                    <Typography className={kelurahan.isActive === true ? 'text-green' : 'text-red'}>
-                                                                                                        {kelurahan.isActive === true ? 'Active' : 'Inactive'}
-                                                                                                    </Typography>
-                                                                                                </TableCell>
-                                                                                                <TableCell>
-                                                                                                    <div className="action">
-                                                                                                        <button>
-                                                                                                            <a onClick={() => Router.push({
-                                                                                                                pathname: "/kecamatan-kelurahan/edit-kelurahan/",
-                                                                                                                query: {
-                                                                                                                    namaKecamatan: row.namaKecamatan,
-                                                                                                                    namaKelurahan: kelurahan.namaKelurahan,
-                                                                                                                    statusKelurahan: kelurahan.isActive,
-                                                                                                                    idKecamatan: row._id
-                                                                                                                },
-                                                                                                            })}>
-                                                                                                                <EditIcon />
-                                                                                                            </a></button>
-                                                                                                        <button>
-                                                                                                            <a>
-                                                                                                                <DeleteIcon />
-                                                                                                            </a>
-                                                                                                        </button>
-                                                                                                    </div>
-                                                                                                </TableCell>
-                                                                                            </TableRow>
-                                                                                        ))}
-                                                                                </TableBody>
-                                                                            </Table>
-                                                                        </Box>
-                                                                    }
-                                                                </Collapse>
-                                                            </TableCell>
-                                                        </TableRow>
-                                                    </>
-                                                    :
-                                                    <>
-                                                        <a>a</a>
-                                                    </>
                                             ))}
 
                                 </TableBody>

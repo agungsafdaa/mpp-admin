@@ -92,8 +92,7 @@ export default function KategoriBidang() {
     }
     listBidang()
   }, [idDinas]);
-
-
+  
   return (
     <>
       <Head>

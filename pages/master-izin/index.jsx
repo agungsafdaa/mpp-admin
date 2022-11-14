@@ -51,7 +51,9 @@ function CustomPagination() {
     />
   );
 }
-export default function ListDinas({ value }) {
+
+
+export default function ListDinas() {
   const MySwal = withReactContent(Swal)
   const [open, setOpen] = useState(false);
   const [progress, setProgress] = useState(false);
@@ -73,7 +75,7 @@ export default function ListDinas({ value }) {
     setProgress(true)
 
     try {
-      let url = `${process.env.DB_API}dinas/list-dinas`
+      let url = `${process.env.DB_API}ijin/list`
       const response = await axios.get(url, {
         headers: {
           Authorization: Cookies.get('token')
@@ -82,7 +84,7 @@ export default function ListDinas({ value }) {
 
       if (response.status === 200) {
         setProgress(false)
-        setDinas(response.data.data)
+        setDinas(response.data.ijin)
 
       }
 
@@ -103,14 +105,14 @@ export default function ListDinas({ value }) {
   const columns = [
 
     {
-      field: 'kodeDinas', headerName: 'Kode Dinas', width: 200
+      field: 'namaIjin', headerName: 'Nama Izin', width: 200
 
     },
     {
       field: 'namaDinas', headerName: 'Nama Dinas', width: 300,
     },
     {
-      field: 'singkatan', headerName: 'Singkatan Dinas', width: 200,
+      field: 'namaBidang', headerName: 'Nama Bidang', width: 200,
     },
     {
       field: 'isActive', headerName: 'Status', width: 200,
@@ -182,24 +184,10 @@ export default function ListDinas({ value }) {
             <div className="heading">
               <h3>Kategori Dinas</h3>
               <div className="action">
-                <Button className="button-mpp" variant="contained" onClick={() => Router.push(`/master-dinas/tambah-dinas/`)}>
+                <Button className="button-mpp" variant="contained" onClick={() => Router.push(`/master-izin/tambah/`)}>
                   Tambah
                 </Button>
-                <Paper
-                  component="form"
-                  className="shadow-none form-mpp"
-                  sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 400 }}
-                >
-                  <InputBase
-                    sx={{ ml: 1, flex: 1 }}
-                    placeholder="Search "
-                    onChange={e => setSearchVal(e.target.value)}
-                    inputProps={{ 'aria-label': 'search ' }}
-                  />
-                  <IconButton type="button" aria-label="search">
-                    <SearchIcon />
-                  </IconButton>
-                </Paper>
+              
 
               </div>
             </div>
@@ -239,11 +227,12 @@ export default function ListDinas({ value }) {
                     columns={columns}
                     rowHeight={50}
                     getRowClassName={(params) => `row-${params.row.isActive}`}
-                    // , params.row.isActive === false ? 'row-inactive' : ''
                     className="table-mpp"
                     pagination
-                    
                     disableColumnFilter={true}
+                    disableDensitySelector={true}
+                    disableColumnSelector={true}
+                    disableSelectionOnClick={true}
                     pageSize={10}
                     rowsPerPageOptions={[8]}
                     components={{

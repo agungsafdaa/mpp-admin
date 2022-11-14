@@ -44,7 +44,7 @@ const Layout = ({ children }) => {
   const MenuSidebar = [
     { label: 'Kategori Dinas', path: '/master-dinas' },
     { label: 'Master Bidang/Seksi PTSP', path: '/master-bidang-ptsp' },
-    { label: 'Kategori Izin', path: '/kategori-izin' },
+    { label: 'Kategori Izin', path: '/master-izin' },
     { label: 'Master Persyaratan', path: '/master-persyaratan' },
     { label: 'Kecamatan & Kelurahan', path: '/kecamatan-kelurahan' },
   ]
